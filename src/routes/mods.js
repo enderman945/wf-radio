@@ -4,7 +4,7 @@ const router = express.Router();
 
 // List mods
 router.get("/list", async (req,res) => {
-        console.log("Accessing mods list");
+        console.debug("Accessing mods list");
         res.send("No list yet");
 });
 

@@ -4,12 +4,12 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const path = require("path");
-const { MySQLDatabase, SQLiteDatabase, connectDatabase } = require('./database');
+const { getDatabase  } = require('./src/database/index');
 
 
-const config_folder = path.join(__dirname, "config");
+const config_folder = "config";
 const config_file_name = "config.json"
-const data_folder = path.join(__dirname, "db");
+const data_folder = "data";
 const sqlite_file_name = "sqlite.db"
 
 const default_port = 8000
@@ -34,14 +34,14 @@ const port = config.port || default_port;
 console.debug("Port: ", port);
 
 // Database connection
-db = connectDatabase(config.database);
+db = getDatabase(config.database);
 
 // --- Routing ---
 
-app.use("/mods", require("./routes/mods"));
+app.use("/mods", require("./src/routes/mods"));
 
 // --- Launch ---
 
 app.listen(port, () => {
-    console.log("Server listening on port " + port);
+    console.log("Server listening on port " + port + "...");
 })

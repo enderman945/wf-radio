@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,13 +12,13 @@
   "license": "ISC",
   "packageManager": "pnpm@10.5.2",
   "dependencies": {
+    "better-sqlite3": "^11.8.1",
     "express": "^4.21.2",
-    "mysql": "^2.18.1",
-    "sqlite3": "^5.1.7"
+    "mysql": "^2.18.1"
   },
   "pnpm": {
-    "ignoredBuiltDependencies": [
-      "sqlite3"
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
     ]
   }
 }
