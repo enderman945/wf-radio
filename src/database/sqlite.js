@@ -1,13 +1,15 @@
+// TODO promisify
+const sqlite = require("better-sqlite3");
+
 class SQLiteDatabase {
     constructor(config) {
-        const sqlite = require("better-sqlite3");
         this.config = config;
         this.db = null;
       }
 
     async connect() {
         try {
-            const db = new sqlite("./data/sqlite.db")
+            this.db = new sqlite("./data/sqlite.db")
             // db.pragma("journal_mode = WAL")
             console.log("Connected to SQLite");
         } catch (err) {

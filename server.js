@@ -35,6 +35,7 @@ console.debug("Port: ", port);
 
 // Database connection
 db = getDatabase(config.database);
+db.connect();
 
 // --- Routing ---
 
