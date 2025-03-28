@@ -40,7 +40,7 @@ db = connectDatabase(config.database);
 
 // --- Routing ---
 
-app.use("/", require("./src/routes/root"));
+app.use("/", require("./src/routes/index"));
 app.use("/mods", require("./src/routes/mods"));
 
 // -- Error handling ---
