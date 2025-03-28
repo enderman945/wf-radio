@@ -5,10 +5,11 @@ async function getAllMods(req, res) {
         console.debug("Calling controller");
         const query_result = await mod_service.getAllMods();
         console.debug("Controller OK");
-        return res.json(query_result);
+        res.json(query_result);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        console.debug("Error at controller");
+        res.status(500).json({ error: error.message });
     }
 }
 
-module.exports = {getAllMods};
+module.exports = { getAllMods };

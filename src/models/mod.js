@@ -1,4 +1,5 @@
-// const db = require("...");
+const { getDatabase } = require('../database/index');
+const db = getDatabase();
 
 async function getAllMods() { 
     console.debug("Calling model");

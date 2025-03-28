@@ -1,11 +1,13 @@
-// --- Define constants ---
+// --- Imports ---
 
 const express = require("express");
 const app = express();
 const fs = require("fs");
 const path = require("path");
-const { getDatabase  } = require('./src/database/index');
+const { getDatabase, connectDatabase  } = require('./src/database/index');
+const handleError = require('./src/middleware/errors');
 
+// --- Define constants ---
 
 const config_folder = "config";
 const config_file_name = "config.json"
@@ -34,12 +36,16 @@ const port = config.port || default_port;
 console.debug("Port: ", port);
 
 // Database connection
-db = getDatabase(config.database);
-db.connect();
+db = connectDatabase(config.database);
 
 // --- Routing ---
 
+app.use("/", require("./src/routes/root"));
 app.use("/mods", require("./src/routes/mods"));
+
+// -- Error handling ---
+
+app.use(handleError);
 
 // --- Launch ---
 

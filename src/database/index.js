@@ -1,15 +1,24 @@
 const MySQLDatabase = require("./mysql");
 const SQLiteDatabase = require("./sqlite");
 
-function getDatabase(config) {
+let db;
+
+async function connectDatabase(config) {
     if (config.type === "mysql") {
-      return new MySQLDatabase(config);
+      db = new MySQLDatabase(config);
     } else if (config.type === "sqlite") {
-      return new SQLiteDatabase(config);
+      db = new SQLiteDatabase(config);
     } else {
       throw new Error("Invalid database type: ", config.type);
     }
+    
+    await db.connect();
+    return db;
+}
+
+function getDatabase() {
+    return db;
 }
   
 
-module.exports = { getDatabase };
+module.exports = { getDatabase, connectDatabase };
