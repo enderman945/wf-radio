@@ -8,9 +8,4 @@ router.get('/', (res, req) => {
     controller.helloWorld(res, req);
 });
 
-router.get('/hey', (res, req) => {
-    console.debug("Triggered hey");
-    controller.hey(res, req);
-});
-
 module.exports = router;
