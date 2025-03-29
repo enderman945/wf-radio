@@ -5,4 +5,9 @@ async function getAllMods() {
     return model.getAllMods();
 }
 
-module.exports = { getAllMods };
+async function getModByName(name) {
+    console.debug("Calling service");
+    return model.getModByName(name);
+}
+
+module.exports = { getAllMods, getModByName };

@@ -7,7 +7,19 @@ async function getAllMods() {
 }
 
 async function getModByName(name) {
-    return db.query("SELECT display_name FROM mods WHERE name = ?", [name]);
+    try {
+        console.debug("Searching for", name);
+        const res = await db.query("SELECT * FROM mods WHERE Name = ?;", [name]);
+        if (res && res.length > 0) {
+            return res[0];
+        } else {
+            return null;
+        }
+    } catch (err) {
+        console.error("Error in getModByName:", err);
+        throw error;
+    }
+
 }
 
 // --- WIP ---

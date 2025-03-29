@@ -12,4 +12,16 @@ async function getAllMods(req, res) {
     }
 }
 
-module.exports = { getAllMods };
+async function getModByName(req, res) {
+    try {
+        console.debug("Calling controller");
+        const query_result = await mod_service.getModByName(req.params.name);
+        res.json(query_result);
+    } catch (error) {
+        console.debug("Error at controller");
+        res.status(500).json({ error: error.message });
+    }
+}
+
+
+module.exports = { getAllMods, getModByName };

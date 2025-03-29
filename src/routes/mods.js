@@ -12,8 +12,7 @@ router.get("/", async (req,res) => {
 router.get("/:name", async (req,res) => {
         const name = req.params.name;
         console.debug("Accessing mod " + name)
-        res.send("Not implemented");
-        // res.send(name + " is not there yet");
+        controller.getModByName(req, res);
 })
 
 module.exports = router;
