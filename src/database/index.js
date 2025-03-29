@@ -19,6 +19,20 @@ async function connectDatabase(config) {
 function getDatabase() {
     return db;
 }
-  
 
-module.exports = { getDatabase, connectDatabase };
+// Setups the database by creating the tables and the default objects
+function initDatabase() {
+    if (db == null) {
+        throw new Error("Database is not connected");
+    }
+    
+    db.exec("CREATE TABLE mods ( \
+                Name tinytext PRIMARY KEY, \
+                DisplayName tinytext, \
+                Author tinytext FOREIGN KEY,\
+                Versions longtext,\
+                OtherInfos longtext \
+                )");
+}
+
+module.exports = { getDatabase, connectDatabase, initDatabase };

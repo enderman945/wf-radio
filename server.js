@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const path = require("path");
-const { getDatabase, connectDatabase  } = require('./src/database/index');
+const { getDatabase, connectDatabase, initDatabase  } = require('./src/database/index');
 const handleError = require('./src/middleware/errors');
 
 // --- Define constants ---
@@ -37,6 +37,7 @@ console.debug("Port: ", port);
 
 // Database connection
 db = connectDatabase(config.database);
+db = initDatabase();
 
 // --- Routing ---
 

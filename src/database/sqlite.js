@@ -9,8 +9,8 @@ class SQLiteDatabase {
 
     async connect() {
         try {
-            this.db = new sqlite("./data/sqlite.db")
-            // db.pragma("journal_mode = WAL")
+            this.db = new sqlite("./data/sqlite.db");
+            // db.pragma("journal_mode = WAL");
             console.log("Connected to SQLite");
         } catch (err) {
             console.error("Error connecting to SQLite database: ", err);
@@ -33,9 +33,17 @@ class SQLiteDatabase {
               return this.db.prepare(sql).all();
             }
         } catch (err) {
-            console.error("Error executing query: ", err);
+            console.error("Error executing prepared query:", err);
             throw err;
         }
+    }
+
+    async exec(sql) {
+        try {
+            return this.db.exec(sql);
+        } catch (err) {
+            console.error("Error executing query:", err)}
+
     }
 
 }
