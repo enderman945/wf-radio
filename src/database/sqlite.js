@@ -42,8 +42,23 @@ class SQLiteDatabase {
         try {
             return this.db.exec(sql);
         } catch (err) {
-            console.error("Error executing query:", err)}
+            console.error("Error executing statement:", err)}
 
+    }
+
+    async prepare(sql) {
+        try {
+            return this.db.prepare(sql);
+        } catch (err) {
+            console.error("Error executing prepared statement:", err)}
+    }
+
+    async exists(table, attribute, value) {
+        try {
+            return this.db.prepare(`SELECT COUNT(*) FROM ${table} WHERE ${attribute} = ?`).get(value)['COUNT(*)'] > 0;            
+        } catch (err) {
+            console.error("Error checking item existence");
+        }
     }
 
 }

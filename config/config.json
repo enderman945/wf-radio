@@ -1,5 +1,12 @@
 {
     "port": 8000,
+
+    "users": {
+        "admin": {
+            "username": "admin",
+            "password": "admin"
+        }
+    },
     
     "database": {
         "type": "sqlite"
