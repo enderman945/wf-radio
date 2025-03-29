@@ -26,7 +26,7 @@ function initDatabase() {
         throw new Error("Database is not connected");
     }
     
-    db.exec("CREATE TABLE mods ( \
+    db.exec("CREATE TABLE IF NOT EXISTS mods ( \
                 Name tinytext PRIMARY KEY, \
                 DisplayName tinytext, \
                 Author tinytext FOREIGN KEY,\
