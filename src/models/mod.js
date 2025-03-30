@@ -1,8 +1,8 @@
 const { getDatabase } = require('../database/index');
+const AppError = require('../utils/appError');
 const db = getDatabase();
 
 async function getAllMods() { 
-    console.debug("Calling model");
     return db.query("SELECT * FROM mods");
 }
 
@@ -26,25 +26,35 @@ async function exists(name) {
     return db.exists("mods", "Name", name);
 }
 
-// --- WIP ---
-
 async function createMod(mod_data) {
-    console.warn("WARNING: using a WIP function : createMod (models/mods.js)");
-    const { name, displayName, author, versions, otherInfos } = mod_data;
-    return db.prepare("INSERT INTO mods (Name, DisplayName, Author, Versions, OtherInfos) VALUES (?, ?, ?, ?, ?)", [name, displayName, author, versions, otherInfos]);
-}
 
-async function updateMod(mod_data) {
-    console.log("WARNING: using a WIP function : updateMod (models/mods.js)");
-    throw new Error("Not implemented");
-    // const { name, description } = mod_data;
-    // return db.query("INSERT INTO mods (name, description) VALUES (?, ?)", [name, description]);
+    const { name, displayName, author, versions, otherInfos } = mod_data;
+    const { description, links, tags, screenshots, license, changelogs, counts } = otherInfos;
+
+    await db.prepare("INSERT INTO mods (Name, DisplayName, Author, Versions) \
+           VALUES (?, ?, ?, ?)", [name, displayName, author, versions]);
+    // db.prepare("INSERT INTO modsDescription (Name, Description, Links, Tags, Screenshots, License, Changelogs, Counts) \
+    //       VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [name, description, links, tags, screenshots, license, changelogs, counts]);
+    return;
 }
 
 async function deleteMod(name) {
     console.log("WARNING: using a WIP function : deleteMod (models/mods.js)");
-    return db.query("DELETE FROM mods WHERE name = ?", [name]);
+    db.prepare("DELETE FROM mods WHERE Name = ?", [name]);
+    // db.prepare("DELETE FROM modsDescription WHERE Name = ?", [name]);
+    return;
+}
+
+// --- WIP ---
+
+async function updateMod(mod_data) {
+    console.log("WARNING: using a WIP function : updateMod (models/mods.js)");
+    throw new AppError(501, "Not implemented");
+    // const { name, description } = mod_data;
+    // return db.query("INSERT INTO mods (name, description) VALUES (?, ?)", [name, description]);
 }
 
 
-module.exports = { getAllMods, getModByName, createMod, exists }
+
+
+module.exports = { getAllMods, getModByName, createMod, deleteMod, exists }

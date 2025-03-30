@@ -22,4 +22,12 @@ router.get("/:name", async (req,res) => {
         controller.getModByName(req, res);
 });
 
+//
+router.delete("/:name", async (req,res) => {
+        const name = req.params.name;
+        console.debug("Deleting mod " + name)
+        controller.deleteMod(req, res);
+});
+
+
 module.exports = router;

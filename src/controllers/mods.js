@@ -24,13 +24,24 @@ async function getModByName(req, res) {
 
 async function createMod(req, res) {
     try {
-        const status = await mod_service.createMod(req.body);
-        res.status(status);
+        await mod_service.createMod(req.body);
+        res.sendStatus(200);
     } catch (error) {
-        console.error("Cannot create mod:", error.message);
+        console.error("ERROR: Couldn't create mod:", error.message);
+        handleError(error, req, res, null);
+    }
+}
+
+async function deleteMod(req, res) {
+    try {
+        await mod_service.deleteMod(req.params.name);
+        return res.sendStatus(200);
+    } catch (error) {
+        console.error("ERROR: Couldn't delete mod " + req.params.name + ":", error.message);
         handleError(error, req, res, null);
     }
 }
 
 
-module.exports = { getAllMods, getModByName, createMod };
+
+module.exports = { getAllMods, getModByName, createMod, deleteMod };

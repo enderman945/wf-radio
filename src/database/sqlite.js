@@ -1,4 +1,3 @@
-// TODO promisify
 const sqlite = require("better-sqlite3");
 
 class SQLiteDatabase {
