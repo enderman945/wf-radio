@@ -3,10 +3,10 @@ class AppError extends Error {
         super(message);
         this.statusCode = statusCode;
         
-        if (status_code.ToString().startsWith("4")) {
-            this.status = "fail";
+        if (statusCode.toString().startsWith("4")) {
+            this.status = "Fail";
         } else {
-            this.status = "error";
+            this.status = "Error";
         }
     }
 }

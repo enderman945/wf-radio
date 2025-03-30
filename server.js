@@ -39,14 +39,15 @@ console.debug("Port: ", port);
 db = connectDatabase(config.database);
 db = initDatabase(config);
 
+// -- Usings ---
+
+app.use(handleError); // Error handling
+app.use(express.json()); // Request body handling 
+
 // --- Routing ---
 
 app.use("/", require("./src/routes/index"));
 app.use("/mods", require("./src/routes/mods"));
-
-// -- Error handling ---
-
-app.use(handleError);
 
 // --- Launch ---
 

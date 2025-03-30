@@ -1,11 +1,12 @@
-const AppError = require("../utils/AppError");
+const AppError = require("../utils/appError");
 
 const handleError = (err, req, res, next) => {
-    // Send 
+    
+    // Send error infos
     if (err instanceof AppError) {
         return res.status(err.statusCode).json({
-            message: err.message,
-            status: err.status
+            status: err.status,
+            message: err.message
         });
     }
 

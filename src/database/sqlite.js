@@ -46,9 +46,13 @@ class SQLiteDatabase {
 
     }
 
-    async prepare(sql) {
+    async prepare(sql, params = []) {
         try {
-            return this.db.prepare(sql);
+            if (params.length > 0) {
+                return this.db.prepare(sql).run(params);
+            } else {
+                return this.db.prepare(sql);
+            }
         } catch (err) {
             console.error("Error executing prepared statement:", err)}
     }
