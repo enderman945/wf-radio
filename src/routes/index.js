@@ -8,4 +8,8 @@ router.get('/', (res, req) => {
     controller.helloWorld(res, req);
 });
 
+router.get('/version', (res, req) => {
+    controller.getVersion(res, req);
+});
+
 module.exports = router;

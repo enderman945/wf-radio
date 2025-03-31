@@ -15,14 +15,14 @@ router.post("/", async (req, res) => {
         controller.createMod(req, res);
 })
 
-//
+// Get mod infos
 router.get("/:name", async (req,res) => {
         const name = req.params.name;
         console.debug("Accessing mod " + name)
         controller.getModByName(req, res);
 });
 
-//
+// Delete mod
 router.delete("/:name", async (req,res) => {
         const name = req.params.name;
         console.debug("Deleting mod " + name)

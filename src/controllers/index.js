@@ -1,10 +1,11 @@
+const handleError = require("../middleware/errors");
+
 async function helloWorld(req, res) {
     try {
-        const query_result = "Hello there!";
+        const query_result = "Unknown development version";
         res.send(query_result);
     } catch (error) {
-        console.debug("Error at HelloWorld controller");
-        res.status(500).json({ error: error.message });
+        handleError(error);
     }
 }
 
