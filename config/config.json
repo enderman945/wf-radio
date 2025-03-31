@@ -10,5 +10,7 @@
     
     "database": {
         "type": "sqlite"
-    }
+    },
+
+    "JWT_secret": "HGF7654EGBNKJNBJH6754356788GJHGY"
 }

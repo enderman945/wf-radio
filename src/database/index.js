@@ -25,18 +25,37 @@ async function initDatabase(config) {
     
     // Create mods table
     db.exec("CREATE TABLE IF NOT EXISTS mods ( \
-                Name tinytext PRIMARY KEY, \
-                DisplayName tinytext, \
-                Author tinytext,\
-                Versions longtext,\
-                OtherInfos longtext \
-                );");
+      Username tinytext PRIMARY KEY, \
+      DisplayName tinytext, \
+      Author tinytext,\
+      Versions longtext,\
+      OtherInfos longtext \
+      );");
     
     // Insert example mod
     if (!(await db.exists("mods", "Name", "example"))) {
         console.debug("Creating default mod");
         db.exec(`INSERT INTO mods (Name, DisplayName, Author, Versions, OtherInfos) \
             VALUES ('example', 'Example mod', '${config.users.admin.username}', '', '');`);
+    }
+
+    db.exec("DROP TABLE users");
+    // Create users table
+    db.exec("CREATE TABLE IF NOT EXISTS users ( \
+      Username tinytext PRIMARY KEY, \
+      DisplayName tinytext, \
+      Email tinytext,\
+      Password tinytext,\
+      ProfilePicture longtext,\
+      Preferences longtext, \
+      Favorites longtext \
+      );");
+
+      // Insert default admin account
+      if (!(await db.exists("users", "Username", config.users.admin.username))) {
+        console.debug("Creating default admin user");
+        db.exec(`INSERT INTO users (Username, DisplayName, Email, Password, ProfilePicture, Preferences, Favorites) \
+            VALUES ('${config.users.admin.username}', 'Admin', '', '${config.users.admin.password}', '',  '', '' );`);
     }
 }
 

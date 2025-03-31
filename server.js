@@ -48,6 +48,8 @@ app.use(express.json()); // Request body handling
 
 app.use("/", require("./src/routes/index"));
 app.use("/mods", require("./src/routes/mods"));
+app.use("/users", require("./src/routes/users"));
+app.use("/login", require("./src/routes/login"));
 
 // --- Launch ---
 

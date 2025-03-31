@@ -13,15 +13,18 @@
   "license": "ISC",
   "packageManager": "pnpm@10.5.2",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "better-sqlite3": "^11.9.1",
     "dompurify": "^3.2.4",
     "express": "^4.21.2",
     "jsdom": "^26.0.0",
+    "jsonwebtoken": "^9.0.2",
     "marked": "^15.0.7",
     "mysql": "^2.18.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "bcrypt",
       "better-sqlite3"
     ]
   },

@@ -13,7 +13,7 @@ router.get("/", async (req,res) => {
 router.post("/", async (req, res) => {
         console.debug("Creating mod ", req.body.name);
         controller.createMod(req, res);
-})
+});
 
 // Get mod infos
 router.get("/:name", async (req,res) => {
