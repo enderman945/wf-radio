@@ -1,7 +1,8 @@
 class AppError extends Error {
-    constructor(statusCode, status = "", message) {
+    constructor(statusCode, message, status = "", debugMsg = "") {
         super(message);
         this.statusCode = statusCode;
+        this.debugMsg = debugMsg;
         // Get status
         if (status === "") {
             if (statusCode.toString().startsWith("4")) {

@@ -1,6 +1,7 @@
 const sqlite = require("better-sqlite3");
 
 class SQLiteDatabase {
+    
     constructor(config) {
         this.config = config;
         this.db = null;
@@ -9,7 +10,7 @@ class SQLiteDatabase {
     async connect() {
         try {
             this.db = new sqlite("./data/sqlite.db");
-            // db.pragma("journal_mode = WAL");
+            // this.db.pragma("journal_mode = WAL");
             console.log("Connected to SQLite");
         } catch (err) {
             console.error("Error connecting to SQLite database: ", err);

@@ -2,47 +2,19 @@
 
 const express = require("express");
 const app = express();
-const fs = require("fs");
-const path = require("path");
-const { getDatabase, connectDatabase, initDatabase  } = require('./src/database/index');
-const handleError = require('./src/middleware/errors');
+const { loadConfig } = require("./src/utils/configManager");
+const { connectDatabase, initDatabase  } = require('./src/database/index');
 
-// --- Define constants ---
-
-const config_folder = "config";
-const config_file_name = "config.json"
-const data_folder = "data";
-const sqlite_file_name = "sqlite.db"
-
-const default_port = 8000
 
 // --- Load configuration ---
+const config = loadConfig();
 
-// var declaration
-let db;
-let config;
-
-// Load config
-try {
-    config = JSON.parse(fs.readFileSync(path.join(config_folder, config_file_name)));
-    console.debug("Loaded config");
-} catch (err) {
-    console.error("Couldn't read config file: ", err);
-    process.exit(1);
-}
-
-// vars definition
-const port = config.port || default_port;
-console.debug("Port: ", port);
+// --- Body parsing ---
+app.use(express.json()); // Necessary to parse JSON bodies
 
 // Database connection
-db = connectDatabase(config.database);
-db = initDatabase(config);
-
-// -- Usings ---
-
-app.use(handleError); // Error handling
-app.use(express.json()); // Request body handling 
+connectDatabase(config.database);
+initDatabase(config);
 
 // --- Routing ---
 
@@ -53,6 +25,7 @@ app.use("/login", require("./src/routes/login"));
 
 // --- Launch ---
 
+const port = config.server.port;
 app.listen(port, () => {
     console.log("Server listening on port " + port + "...");
 })
