@@ -1,6 +1,6 @@
 const model = require("../models/mod");
 const AppError = require("../utils/appError");
-const { validateModData } = require("../utils/validate");
+const { validateModData } = require("../utils/validate_legacy");
 const { mdToHtml } = require("../utils/convert");
 const { sanitizeModData } = require("../utils/sanitize");
 

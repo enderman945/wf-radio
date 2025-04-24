@@ -1,6 +1,6 @@
 const model = require("../models/user");
 const AppError = require("../utils/appError");
-const { validateUserData } = require("../utils/validate");
+const { validateUserData } = require("../utils/validate_legacy");
 const { sanitizeUserData } = require("../utils/sanitize");
 
 async function getAllUsers() {

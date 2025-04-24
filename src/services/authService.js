@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../models/user");
 const AppError = require("../utils/appError");
 const configManager = require("../utils/configManager");
-const validate = require("../utils/validate");
+const validate = require("../utils/validate_legacy");
 
 const JWT_Secret = configManager.getJWTSecret();
 
