@@ -1,6 +1,6 @@
-const { getConfig } = require("../utils/configManager");
 const MySQLDatabase = require("./mysql");
 const SQLiteDatabase = require("./sqlite");
+const { getConfig } = require("../utils/configManager");
 
 let db;
 
