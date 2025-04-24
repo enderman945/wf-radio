@@ -13,15 +13,20 @@ const config = loadConfig();
 app.use(express.json()); // Necessary to parse JSON bodies
 
 // Database connection
-connectDatabase(config.database);
-initDatabase(config);
+(async () => {
 
-// --- Routing ---
+    // --- Database connection ---
+    await connectDatabase();
+    await initDatabase();
 
-app.use("/", require("./src/routes/index"));
-app.use("/mods", require("./src/routes/mods"));
-app.use("/users", require("./src/routes/users"));
-app.use("/login", require("./src/routes/login"));
+    // --- Routing ---
+    app.use("/", require("./src/routes/index"));
+    app.use("/mods", require("./src/routes/mods"));
+    app.use("/users", require("./src/routes/users"));
+    app.use("/login", require("./src/routes/login"));
+
+})();
+
 
 // --- Launch ---
 

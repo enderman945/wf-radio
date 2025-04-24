@@ -1,9 +1,15 @@
+const { getConfig } = require("../utils/configManager");
 const MySQLDatabase = require("./mysql");
 const SQLiteDatabase = require("./sqlite");
 
 let db;
 
-async function connectDatabase(config) {
+async function connectDatabase() {
+
+    // Get config
+    const config = await getConfig();
+
+    // Choose database type
     if (config.type === "mysql") {
       db = new MySQLDatabase(config);
     } else if (config.type === "sqlite") {
@@ -12,14 +18,16 @@ async function connectDatabase(config) {
       throw new Error("Invalid database type: ", config.type);
     }
     
+    // Connect
     await db.connect();
     return db;
 }
 
 
 // Setups the database by creating the tables and the default objects
-async function initDatabase(config) {
-    if (db == null) {
+async function initDatabase() {
+
+    if (!db) {
         throw new Error("Database is not connected");
     }
     
@@ -33,11 +41,11 @@ async function initDatabase(config) {
       );");
     
     // Insert example mod
-    if (!(await db.exists("mods", "Name", "example"))) {
-        console.debug("Creating default mod");
-        db.exec(`INSERT INTO mods (Name, DisplayName, Author, Versions, OtherInfos) \
-            VALUES ('example', 'Example mod', '${config.users.admin.username}', '', '');`);
-    }
+    // if (!(await db.exists("mods", "Name", "example"))) {
+    //     console.debug("Creating default mod");
+    //     db.exec(`INSERT INTO mods (Name, DisplayName, Author, Versions, OtherInfos) \
+    //         VALUES ('example', 'Example mod', '${config.users.admin.username}', '', '');`);
+    // }
 
     db.exec("DROP TABLE users");
     // Create users table
@@ -52,11 +60,11 @@ async function initDatabase(config) {
       );");
 
       // Insert default admin account
-      if (!(await db.exists("users", "Username", config.users.admin.username))) {
-        console.debug("Creating default admin user");
-        db.exec(`INSERT INTO users (Username, DisplayName, Email, Password, ProfilePicture, Preferences, Favorites) \
-            VALUES ('${config.users.admin.username}', 'Admin', '', '${config.users.admin.password}', '',  '', '' );`);
-    }
+    //   if (!(await db.exists("users", "Username", config.users.admin.username))) {
+    //     console.debug("Creating default admin user");
+    //     db.exec(`INSERT INTO users (Username, DisplayName, Email, Password, ProfilePicture, Preferences, Favorites) \
+    //         VALUES ('${config.users.admin.username}', 'Admin', '', '${config.users.admin.password}', '',  '', '' );`);
+    // }
 }
 
 
