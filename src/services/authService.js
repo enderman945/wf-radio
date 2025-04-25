@@ -45,22 +45,10 @@ async function login(identifier, password) {
     return jwt.sign({ username: user[0].username, role: user[0].role }, await JWT_Secret);
 }
 
-function verifyToken(token) {
-    return new Promise( (resolve, reject) => {
-        jwt.verify( token, JWT_Secret, (err, user) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(user);
-            }
-        });
-    });
-}
-
 // function authorizeRole(user, roles) {
 //     if (!user || !roles.includes(user.role)) {
 //         throw new AppError(401, "Unauthorized: You don't have the necessary permissions to access this resource");
 //     }
 // }
 
-module.exports = { login, verifyToken };
+module.exports = { login };
