@@ -80,4 +80,4 @@ async function authorizeUserModification(req) {
 }
 
 
-module.exports = { authenticateToken }
+module.exports = { authenticateToken, authorizeModModification, authorizeModpackModification, authorizeUserModification };

@@ -3,27 +3,16 @@ const AppError = require('../utils/appError');
 const db = getDatabase();
 
 async function getAllMods() { 
-    return db.query("SELECT * FROM mods");
+    return db.query("SELECT name FROM Mods");
 }
 
 async function getModByName(name) {
-    try {
-        console.debug("Searching for", name);
-        const res = await db.query("SELECT * FROM mods WHERE Name = ?;", [name]);
-        if (res && res.length > 0) {
-            return res[0];
-        } else {
-            return null;
-        }
-    } catch (err) {
-        console.error("Error in getModByName:", err);
-        throw err;
-    }
+    return await db.query("SELECT name, display_name, author FROM Mods WHERE name = ?;", [name]);
 
 }
 
 async function exists(name) {
-    return db.exists("mods", "Name", name);
+    return db.exists("Mods", "name", name);
 }
 
 async function createMod(mod_data) {
@@ -31,8 +20,8 @@ async function createMod(mod_data) {
     const { name, displayName, author, versions, otherInfos } = mod_data;
     const { description, links, tags, screenshots, license, changelogs, counts } = otherInfos;
 
-    await db.prepare("INSERT INTO mods (Name, DisplayName, Author, Versions) \
-           VALUES (?, ?, ?, ?)", [name, displayName, author, versions]);
+    await db.prepare("INSERT INTO mods (name, display_name, author) \
+           VALUES (?, ?, ?, ?)", [name, displayName, author]);
     // db.prepare("INSERT INTO modsDescription (Name, Description, Links, Tags, Screenshots, License, Changelogs, Counts) \
     //       VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [name, description, links, tags, screenshots, license, changelogs, counts]);
     return;
@@ -40,7 +29,7 @@ async function createMod(mod_data) {
 
 async function deleteMod(name) {
     console.log("WARNING: using a WIP function : deleteMod (models/mods.js)");
-    db.prepare("DELETE FROM mods WHERE Name = ?", [name]);
+    db.prepare("DELETE FROM Mods WHERE name = ?", [name]);
     // db.prepare("DELETE FROM modsDescription WHERE Name = ?", [name]);
     return;
 }

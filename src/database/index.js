@@ -11,11 +11,11 @@ async function connectDatabase() {
 
     // Choose database type
     if (config.type === "mysql") {
-      db = new MySQLDatabase(config);
+        db = new MySQLDatabase(config);
     } else if (config.type === "sqlite") {
-      db = new SQLiteDatabase(config);
+        db = new SQLiteDatabase(config);
     } else {
-      throw new Error("Invalid database type: ", config.type);
+        throw new Error("Invalid database type: ", config.type);
     }
     
     // Connect
@@ -32,32 +32,30 @@ async function initDatabase() {
     }
     
     // Create mods table
-    db.exec("CREATE TABLE IF NOT EXISTS mods ( \
-      Username tinytext PRIMARY KEY, \
-      DisplayName tinytext, \
-      Author tinytext,\
-      Versions longtext,\
-      OtherInfos longtext \
-      );");
+    db.exec("CREATE TABLE IF NOT EXISTS Mods ( \
+        name tinytext PRIMARY KEY, \
+        display_name tinytext, \
+        author tinytext\
+        );");
     
     // Insert example mod
     // if (!(await db.exists("mods", "Name", "example"))) {
     //     console.debug("Creating default mod");
-    //     db.exec(`INSERT INTO mods (Name, DisplayName, Author, Versions, OtherInfos) \
-    //         VALUES ('example', 'Example mod', '${config.users.admin.username}', '', '');`);
+    //     db.exec(`INSERT INTO Mods (name, display_name, author, versions) \
+    //         VALUES ('example', 'Example mod', '${config.users.admin.username}', '');`);
     // }
 
-    db.exec("DROP TABLE users");
+
     // Create users table
-    db.exec("CREATE TABLE IF NOT EXISTS users ( \
-      Username tinytext PRIMARY KEY, \
-      DisplayName tinytext, \
-      Email tinytext,\
-      Password tinytext,\
-      ProfilePicture longtext,\
-      Preferences longtext, \
-      Favorites longtext \
-      );");
+    db.exec("CREATE TABLE IF NOT EXISTS Users ( \
+        username tinytext PRIMARY KEY, \
+        display_name tinytext, \
+        email tinytext,\
+        password tinytext,\
+        profile_picture longtext,\
+        preferences longtext, \
+        favorites longtext \
+        );");
 
       // Insert default admin account
     //   if (!(await db.exists("users", "Username", config.users.admin.username))) {
@@ -69,7 +67,7 @@ async function initDatabase() {
 
 
 function getDatabase() {
-  return db;
+    return db;
 }
 
 
