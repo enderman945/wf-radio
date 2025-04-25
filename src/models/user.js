@@ -22,13 +22,14 @@ async function createUser(user_data) {
 
     const { name, email, password, displayName, profilePicture, favorites, preferences } = user_data;
 
+    //TODO breakdown to handle partial updates
     await db.prepare("INSERT INTO Users (username, email, password, display_name, profile_picture, favorites, preferences) \
            VALUES (?, ?, ?, ?)", [name, email, password, displayName, profilePicture, favorites, preferences]);
     return;
 }
 
 async function deleteUser(name) {
-    db.prepare("DELETE FROM Users WHERE username = ?", [name]);
+    await db.prepare("DELETE FROM Users WHERE username = ?", [name]);
     return;
 }
 
@@ -44,4 +45,4 @@ async function updateUser(user_data) {
 
 
 
-module.exports = { getAllUsers, getUserByName, createUser, deleteUser, exists }
+module.exports = { getAllUsers, getUserByName, getUserByEmail, createUser, deleteUser, exists }

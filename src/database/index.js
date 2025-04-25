@@ -31,38 +31,75 @@ async function initDatabase() {
         throw new Error("Database is not connected");
     }
     
-    // Create mods table
-    db.exec("CREATE TABLE IF NOT EXISTS Mods ( \
-        name tinytext PRIMARY KEY, \
-        display_name tinytext, \
-        author tinytext\
-        );");
-    
-    // Insert example mod
-    // if (!(await db.exists("mods", "Name", "example"))) {
-    //     console.debug("Creating default mod");
-    //     db.exec(`INSERT INTO Mods (name, display_name, author, versions) \
-    //         VALUES ('example', 'Example mod', '${config.users.admin.username}', '');`);
-    // }
+    // --- Users ---
 
-
-    // Create users table
+    // Uers table
     db.exec("CREATE TABLE IF NOT EXISTS Users ( \
-        username tinytext PRIMARY KEY, \
-        display_name tinytext, \
-        email tinytext,\
-        password tinytext,\
-        profile_picture longtext,\
-        preferences longtext, \
-        favorites longtext \
+        username        TINYTEXT PRIMARY KEY, \
+        display_name    TINYTEXT, \
+        email           TINYTEXT,\
+        password        TINYTEXT,\
+        profile_picture LONGTEXT,\
+        settings        LONGTEXT, \
         );");
 
-      // Insert default admin account
-    //   if (!(await db.exists("users", "Username", config.users.admin.username))) {
-    //     console.debug("Creating default admin user");
-    //     db.exec(`INSERT INTO users (Username, DisplayName, Email, Password, ProfilePicture, Preferences, Favorites) \
-    //         VALUES ('${config.users.admin.username}', 'Admin', '', '${config.users.admin.password}', '',  '', '' );`);
-    // }
+    // --- Mods ---
+
+    // Mods table
+    db.exec(`CREATE TABLE IF NOT EXISTS Mods (
+        name            TINYTEXT    PRIMARY KEY,
+        display_name    TINYTEXT    NOT NULL,
+        author          TINYTEXT    NOT NULL,
+        description     TINYTEXT    NOT NULL,
+
+        FOREIGN KEY author REFERENCES Users(username)
+        );`);
+
+    // Mods complementary infos
+    db.exec(`CREATE TABLE IF NOT EXISTS ModInfos (
+        mod                 TINYTEXT    PRIMARY KEY,
+        full_description    TEXT        NOT NULL,
+        license             TINYTEXT,
+        custom_license      TEXT,       
+        links               TEXT,       
+        creation_date       TINYTEXT    NOT NULL,
+        downloads_count     INT         NOT NULL,
+
+        FOREIGN KEY mod REFERENCES Users(username)
+        );`);
+
+    // Mods tags
+    db.exec(`CREATE TABLE IF NOT EXISTS ModTags (
+        mod         TINYTEXT    NOT NULL,
+        tag         TINYTEXT    NOT NULL,
+
+        FOREIGN KEY mod REFERENCES Mods(name)
+        );`);
+
+    // Mods versions
+    db.exec(`CREATE TABLE IF NOT EXISTS ModVersions (
+        mod                 TINYTEXT        NOT NULL,
+        version_number      TINYTEXT        NOT NULL,
+        channel             TINYTEXT        NOT NULL,
+        changelog           TEXT            NOT NULL,
+        release_date        TINYTEXT        NOT NULL,
+        game_version        TINYTEXT        NOT NULL,
+        platform            TINYTEXT        NOT NULL,
+        environment         TINYTEXT        NOT NULL,
+        url                 TINYTEXT        NOT NULL,
+
+        FOREGIN KEY mod REFERENCES Mods(name)
+        );`);
+
+    // User favorites (mods)
+    db.exec(`CREATE TABLE IF NOT EXISTS UserFavoriteMods (
+        username    TINYTEXT    NOT NULL,
+        mod         TINYTEXT    NOT NULL,
+        
+        FOREIGN KEY username    REFERENCES Users(username),
+        FOREGIN KEY mod         REFERENCES Mods(name)
+        );`);
+
 }
 
 
