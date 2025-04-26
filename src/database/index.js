@@ -34,14 +34,14 @@ async function initDatabase() {
     // --- Users ---
 
     // Uers table
-    db.exec("CREATE TABLE IF NOT EXISTS Users ( \
-        username        TINYTEXT PRIMARY KEY, \
-        display_name    TINYTEXT, \
-        email           TINYTEXT,\
-        password        TINYTEXT,\
-        profile_picture LONGTEXT,\
-        settings        LONGTEXT, \
-        );");
+    db.exec(`CREATE TABLE IF NOT EXISTS Users (
+        username        TINYTEXT    PRIMARY KEY,
+        display_name    TINYTEXT    NOT NULL,
+        email           TINYTEXT    NOT NULL,
+        password        TINYTEXT    NOT NULL,
+        profile_picture LONGTEXT,
+        settings        LONGTEXT,
+        );`);
 
     // --- Mods ---
 
