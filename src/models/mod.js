@@ -15,7 +15,7 @@ async function getModByName(name) {
 }
 
 async function getFullModInfos(name) {
-
+ 
     // Query
     const base_infos = db.query(`SELECT * FROM Mods WHERE name = ?`, [name]);
     const other_infos = db.query(`SELECT full_description, license, links, creation_date 
@@ -146,4 +146,8 @@ async function deleteTags(tags) {
 
 // --- Exports ---
 
-module.exports = { getAllMods, getModByName, createMod, deleteMod, exists }
+module.exports = { getAllMods, getModByName, getFullModInfos,
+                   createMod, addVersion, addTags,
+                   updateMod,
+                   deleteMod, deleteVersion, deleteTags,
+                   exists };

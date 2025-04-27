@@ -10,15 +10,15 @@ async function getAllUsers(name) {
 }
 
 async function getUserByName(name) {
-    return await db.query("SELECT username, display_name, profile_picture FROM Users WHERE username = ?;", [name]);
+    return await db.query("SELECT username, display_name, profile_picture, role FROM Users WHERE username = ?;", [name]);
 }
 
 async function getUserByEmail(email) {
-    return await db.query("SELECT email, username, display_name,  FROM Users WHERE email = ?;", [email]);
+    return await db.query("SELECT email, username FROM Users WHERE email = ?;", [email]);
 }
 
 async function getFullUserInfos(name) {
-    return await db.query("SELECT username, display_name, email, profile_picture, settings FROM Users WHERE username = ?;", [name]);
+    return await db.query("SELECT username, display_name, email, profile_picture, role, settings FROM Users WHERE username = ?;", [name]);
 }
 
 async function getUserPassword(name) {
@@ -35,8 +35,8 @@ async function exists(name) {
 async function createUser( username, email, password, displayName, profilePicture, settings ) {
 
     // Create user
-    await db.prepare("INSERT INTO Users (username, email, password, display_name) \
-           VALUES (?, ?, ?, ?)", [username, email, password, displayName]);
+    await db.prepare("INSERT INTO Users (username, email, password, display_name, role) \
+           VALUES (?, ?, ?, ?, ?)", [username, email, password, displayName, "user"]);
 
     // Handle nullable fields
     if (profilePicture) {
@@ -46,6 +46,19 @@ async function createUser( username, email, password, displayName, profilePictur
     if (settings) {
         await updateUserAttribute(username, "settings", settings);
     }
+    return;
+}
+
+async function addFavoriteMods(username, favs) {
+
+    const promises = favs.map(async (mod) => {
+        db.query(`INSERT INTO UserFavoriteMods 
+            (username, mod) VALUES (?, ?);`, 
+            [username, mod]);
+
+    });
+    await Promise.all(promises);
+
     return;
 }
 
@@ -75,27 +88,6 @@ async function updateUserPassword(username, password) {
     await db.prepare(`UPDATE Users SET password = ? WHERE username = ?`, [password, username]);
 }
 
-async function updateUserFavoriteMods(username, new_favs, deleted_favs) {
-    
-    // Delete / Add asynchronously
-    const promises_new = new_favs.map(async (mod) => {
-        db.query(`INSERT INTO UserFavoriteMods 
-            (username, mod) VALUES (?, ?);`, 
-            [username, mod]);
-
-    });
-    const promises_deleted = deleted_favs.map(async (mod) => {
-        db.query(`DELETE FROM UserFavoriteMods 
-            WHERE username = ? AND mod = ?;`, [username, mod]);
-    });
-
-    // Await 
-    await Promise.all(promises_new);
-    await Promise.all(promises_deleted);
-
-    return;
-}
-
 async function updateUserAttribute(username, attribute, value) {
     await db.prepare(`UPDATE Users SET ${attribute} = ? WHERE username = ?`, [value, username]);
     return;
@@ -109,11 +101,24 @@ async function deleteUser(username) {
     return;
 }
 
+async function deleteFavoriteMods(username, favs) {
+    
+    const promises = favs.map(async (mod) => {
+        db.query(`DELETE FROM UserFavoriteMods 
+            WHERE username = ? AND mod = ?;`, [username, mod]);
+    });
+
+    // Await 
+    await Promise.all(promises);
+
+    return;
+}
+
 
 // --- Exports ---
 
 module.exports = { getAllUsers, getUserByName, getUserByEmail, getFullUserInfos, getUserPassword, 
-                   createUser, 
-                   updateUser, updateUserFavoriteMods, 
-                   deleteUser, 
+                   createUser, addFavoriteMods,
+                   updateUser,
+                   deleteUser, deleteFavoriteMods,
                    exists }

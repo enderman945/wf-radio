@@ -40,6 +40,7 @@ async function initDatabase() {
         email           TINYTEXT    NOT NULL,
         password        TINYTEXT    NOT NULL,
         profile_picture LONGTEXT,
+        role            TINYTEXT,   NOT NULL,
         settings        LONGTEXT,
         );`);
 
