@@ -26,7 +26,7 @@ async function getUserPassword(name) {
 }
 
 async function exists(name) {
-    return db.exists("Users", "username", name);
+    return await db.exists("Users", "username", name);
 }
 
 
