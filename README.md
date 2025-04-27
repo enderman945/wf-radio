@@ -14,6 +14,10 @@ pnpm install
 
 Then you can run the backend using
 ```sh
+pnpm start
+```
+Or alternatively
+```
 node server.js
 ```
 
