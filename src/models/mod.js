@@ -14,23 +14,40 @@ async function getModByName(name) {
 
 }
 
-async function getFullModInfos(name) {
+async function getModFullInfos(name) {
  
     // Query
     const base_infos = db.query(`SELECT * FROM Mods WHERE name = ?`, [name]);
     const other_infos = db.query(`SELECT full_description, license, links, creation_date 
                                         FROM ModInfos WHERE name = ?`, [name]);
+    const tags = getModTags(name);
 
     // Merge
-    const res = {...await base_infos, ...await other_infos};
+    const res = {...await base_infos, ...await other_infos, ...tags};
 
     return res;
 }
 
-async function exists(name) {
-    return db.exists("Mods", "name", name);
+async function getAllVersions(mod_name) { 
+    return await db.query("SELECT * FROM ModVersions WHERE mod = ?", [mod_name]);
 }
 
+async function getVersionByNumber(mod_name, version_number) {
+    return await db.query(`SELECT * FROM ModVersions 
+                    WHERE  mod = ?
+                    AND    version_number = ?;`, 
+                    [mod_name, version_number]);
+}
+
+async function getVersion(mod_name, version_number, game_version, platform, environment) {
+    return await db.query(`SELECT * FROM ModVersions 
+                    WHERE  mod = ?
+                    AND    version_number = ?
+                    AND    game_version = ?
+                    AND    platform = ?
+                    AND    environment = ?;`, 
+                    [mod_name, version_number, game_version, platform, environment]);
+}
 
 // --- Create ---
 
@@ -65,20 +82,20 @@ async function createMod(name, display_name, author, description, mod_infos) {
     return;
 }
 
-async function addVersion(version_number, channel, changelog, release_date, game_version, platform, environment, url) {
+async function addVersion(mod, version_number, channel, changelog, release_date, game_version, platform, environment, url) {
 
-    await db.prepare(`INSERT INTO ModVersions (version_number, channel, changelog, release_date, game_version, platform, url)
-                                       VALUES (?,              ?,       ?,         ?,            ?,            ?,        ?);`,
-                                              [version_number, channel, changelog, release_date, game_version, platform, url]);
+    await db.prepare(`INSERT INTO ModVersions (mod, version_number, channel, changelog, release_date, game_version, environment, platform, url)
+                                       VALUES (?,   ?,              ?,       ?,         ?,            ?,            ?,           ?,        ?);`,
+                                              [mod, version_number, channel, changelog, release_date, game_version, environment, platform, url]);
     return;
 }
 
-async function addTags(tags) {
+async function addTags(mod, tags) {
     // Add asynchronously
-    const promises = tags.map(async (mod) => {
-        db.query(`INSERT INTO UserFavoriteMods (username, mod) 
-                                        VALUES (?, ?);`, 
-                                                [username, mod]);
+    const promises = tags.map(async (tag) => {
+        db.query(`INSERT INTO ModTags (mod, tag) 
+                               VALUES (?, ?);`, 
+                                      [mod, tag]);
     });
     await Promise.all(promises);
 
@@ -111,22 +128,21 @@ async function deleteMod(name) {
     return;
 }
 
-async function deleteVersion(name, version_number, channel, game_version, platform, environment) {
-    await db.prepare(`DELETE FROM ModVersions WHERE name = ? 
+async function deleteVersion(name, version_number, game_version, platform, environment) {
+    await db.prepare(`DELETE FROM ModVersions WHERE mod = ? 
                                                 AND version_number = ?
-                                                AND channel = ?
                                                 AND game_version = ?
                                                 AND platform = ?
                                                 AND environment = ?;`, 
-                               [name, version_number, channel, game_version, platform, environment]);
+                               [name, version_number, game_version, platform, environment]);
     return;
 }
 
-async function deleteTags(tags) {
+async function deleteTags(mod, tags) {
     // Remove asynchronously
-    const promises = tags.map(async (mod) => {
-        db.query(`DELETE FROM UserFavoriteMods 
-            WHERE username = ? AND mod = ?;`, [username, mod]);
+    const promises = tags.map(async (tag) => {
+        db.query(`DELETE FROM ModTags 
+            WHERE mod = ? AND tag = ?;`, [mod, tag]);
     });
     await Promise.all(promises);
 
@@ -146,10 +162,25 @@ async function updateModInfosAttribute(name, attribute, value) {
     return;
 }
 
+async function ModExists(name) {
+    return db.exists("Mods", "name", name);
+}
+
+async function containsVersion(name, version_number, game_version, platform, environment) {
+    throw new AppError(501, "Not implemented");
+    // return db.exists("Mods", "name", name);
+}
+
+async function containsTag(name, tag) {
+    throw new AppError(501, "Not implemented");
+    // return db.exists("Mods", "name", name);
+}
+
 
 // --- Exports ---
 
 module.exports = { getAllMods, getModByName, getFullModInfos,
+                   getAllModVersions, getVersionByNumber, getVersion,
                    createMod, addVersion, addTags,
                    updateMod,
                    deleteMod, deleteVersion, deleteTags,
