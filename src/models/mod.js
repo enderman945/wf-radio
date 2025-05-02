@@ -50,7 +50,7 @@ async function createMod(name, display_name, author, description, mod_infos) {
                                            [name, full_description, license.type, links.toString(), creation_date]);
     
     // Tags
-    const tags_proc = updateTags(name, tags, []);
+    const tags_proc = addTags(name, tags, []);
 
     // License
     if (license_type == "custom") {
@@ -73,7 +73,7 @@ async function addVersion(version_number, channel, changelog, release_date, game
     return;
 }
 
-async function AddTags(tags) {
+async function addTags(tags) {
     // Add asynchronously
     const promises = tags.map(async (mod) => {
         db.query(`INSERT INTO UserFavoriteMods (username, mod) 
@@ -98,19 +98,9 @@ async function updateMod(name, display_name, author, description) {
         await updateModAttribute(nale, "author", author);
     }
 
-    if (profile_picture) {
-        await updateUserAttribute(name, "description", description)
+    if (description) {
+        await updateModAttribute(name, "description", description)
     }
-}
-
-async function updateModAttribute(name, attribute, value) {
-    await db.prepare(`UPDATE Mods SET ${attribute} = ? WHERE name = ?`, [value, name]);
-    return;
-}
-
-async function updateModInfosAttribute(name, attribute, value) {
-    await db.prepare(`UPDATE ModInfos SET ${attribute} = ? WHERE name = ?`, [value, name]);
-    return;
 }
 
 
@@ -140,6 +130,19 @@ async function deleteTags(tags) {
     });
     await Promise.all(promises);
 
+    return;
+}
+
+
+// --- Utils ---
+
+async function updateModAttribute(name, attribute, value) {
+    await db.prepare(`UPDATE Mods SET ${attribute} = ? WHERE name = ?`, [value, name]);
+    return;
+}
+
+async function updateModInfosAttribute(name, attribute, value) {
+    await db.prepare(`UPDATE ModInfos SET ${attribute} = ? WHERE name = ?`, [value, name]);
     return;
 }
 
