@@ -31,7 +31,8 @@ const default_config = {
     },
 
     "auth" : {
-        "JWT_secret": "HGF7654EGBNKJNBJH6754356788GJHGY"
+        "JWT_secret": "HGF7654EGBNKJNBJH6754356788GJHGY",
+        "tokenExpiry": "1h"
     }
 }
 
@@ -48,7 +49,7 @@ function loadConfig() {
         user_config = JSON.parse(fs.readFileSync(path.resolve(path.join(config_folder, config_file_name))));
         
         // Warns
-        if (!user_config.auth || !user_config.auth.jwtSecret) {
+        if (!user_config.auth || !user_config.auth.JWT_secret) {
             console.warn("WARNING: No JWT secret provided, using the default one. Please note that using the default secret is a major security risk.")
         }
 
@@ -75,7 +76,7 @@ async function getConfig() {
 }
 
 async function getJWTSecret() {
-    return config.auth.JWT_Secret || process.env.JWT_Secret;
+    return config.auth.JWT_secret || process.env.JWT_secret;
 }
 
 async function getVersion() {

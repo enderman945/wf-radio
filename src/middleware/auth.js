@@ -29,11 +29,11 @@ async function authorizeModModification(req) {
     // Auth token
     await authenticateToken(req);
     // Get mod infos
-    if (!req.params || req.params.id) {
+    if (!req.params || !req.params.name) {
         throw new AppError(400, "No mod name was scpecified", "Bad request");
     }
-    const mod_name = req.params.id;
-    const mod = getModByName(mod_name);
+    const mod_name = req.params.name;
+    const mod = await getModByName(mod_name);
     if (!mod) {
         throw new AppError(404, "No mod was found with this name", "Not found");
     }
@@ -48,11 +48,11 @@ async function authorizeModpackModification(req) {
     // Auth token
     await authenticateToken(req);
     // Get mod infos
-    if (!req.params || req.params.id) {
+    if (!req.params || !req.params.name) {
         throw new AppError(400, "No mod name was scpecified", "Bad request");
     }
-    const modpack_name = req.params.id;
-    const modpack = getModpackByName(modpack_name);
+    const modpack_name = req.params.name;
+    const modpack = await getModpackByName(modpack_name);
     if (!modpack) {
         throw new AppError(404, "No mod was found with this name", "Not found");
     }
@@ -67,17 +67,17 @@ async function authorizeUserModification(req) {
     // Auth token
     await authenticateToken(req);
     // Get mod infos
-    if (!req.params || req.params.id) {
+    if (!req.params || !req.params.name) {
         throw new AppError(400, "No mod name was scpecified", "Bad request");
     }
-    const user_name = req.params.id;
-    const user = getUserByName(user_name);
+    const user_name = req.params.name;
+    const user = await getUserByName(user_name);
     if (!user) {
-        throw new AppError(404, "No mod was found with this name", "Not found");
+        throw new AppError(404, "No user was found with this name", "Not found");
     }
     // Authorize
     if ( user.username != req.token_infos.username) {
-        throw new AppError(401, "Mod author differs from current user", "Unauthorized");
+        throw new AppError(401, "User to modify differs from current user", "Unauthorized");
     }
 }
 

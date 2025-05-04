@@ -10,9 +10,10 @@ async function sanitizeText(text) {
 }
 
 async function sanitizeModData(mod_data) {
-    mod_data.displayName = await sanitizeText(mod_data.displayName);
-    mod_data.otherInfos.description = await sanitizeText(mod_data.otherInfos.description);
-    mod_data.otherInfos.changelogs = await sanitizeText(mod_data.otherInfos.changelogs);
+    console.warn("Skipping sanitanization (not implemented)");
+    // mod_data.displayName = await sanitizeText(mod_data.displayName);
+    // mod_data.otherInfos.description = await sanitizeText(mod_data.otherInfos.description);
+    // mod_data.otherInfos.changelogs = await sanitizeText(mod_data.otherInfos.changelogs);
 }
 
 module.exports = { sanitizeText, sanitizeModData };

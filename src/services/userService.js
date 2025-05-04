@@ -1,30 +1,32 @@
 const model = require("../models/user");
 const AppError = require("../utils/appError");
+const cryptoUtils = require("../utils/crypto");
 const { validateUserData } = require("../utils/validate_legacy");
 const { sanitizeUserData } = require("../utils/sanitize");
 
 async function getAllUsers() {
-    return model.getAllUsers();
+    return await model.getAllUsers();
 }
 
 async function getUserByName(name) {
-    return model.getUserByName(name);
+    const res = await model.getUserByName(name);
+    return res[0];
 }
 
 async function createUser(user_data) {    
 
     // Check body validity
-    await validateUserData(user_data);
-
-    // Check authenticity
-    //TODO no auth provider
+    // TODO
 
     // Sanitize
-    await sanitizeUserData(user_data);
+    // TODO
 
-    console.debug("Passed validity checks");
-    model.createUser(user_data);
-    return;
+    // Gather data
+    const { username, email, password, display_name, profile_picture, settings } = user_data
+    const password_hash = await cryptoUtils.hashPassword(password);
+
+    await model.createUser(username, email, password_hash, display_name, null, null);
+    return model.getUserByName(username);
 }
 
 async function deleteUser(name, token_user) {
@@ -35,13 +37,10 @@ async function deleteUser(name, token_user) {
         throw new AppError(404, "Cannot find user with this name", "Not found");
     }
 
-    // Check authenticity
-    if (name != token_user) {
-        throw new AppError(401, "", "Unauthorized");
-    }
+    const res = await model.getUserByName(name);
+    await model.deleteUser(name);
 
-    model.deleteUser(name);
-    return;
+    return res;
 }
 
 module.exports = { getAllUsers, getUserByName, createUser, deleteUser };

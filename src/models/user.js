@@ -5,8 +5,8 @@ const db = getDatabase();
 
 // --- Get ---
 
-async function getAllUsers(name) { 
-    return db.query("SELECT username, display_name, email, profile_picture FROM Users WHERE username = ?", [name]);
+async function getAllUsers() { 
+    return db.query("SELECT username, display_name, email, profile_picture FROM Users");
 }
 
 async function getUserByName(name) {
@@ -35,8 +35,9 @@ async function exists(name) {
 async function createUser( username, email, password, displayName, profilePicture, settings ) {
 
     // Create user
-    await db.prepare("INSERT INTO Users (username, email, password, display_name, role) \
-           VALUES (?, ?, ?, ?, ?)", [username, email, password, displayName, "user"]);
+    await db.prepare(`INSERT INTO Users (username, email, password, display_name, role ) 
+                                 VALUES (?,        ?,     ?,        ?,            ?    )`, 
+                                        [username, email, password, displayName, "user"]);
 
     // Handle nullable fields
     if (profilePicture) {

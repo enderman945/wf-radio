@@ -66,7 +66,7 @@ async function initDatabase() {
         creation_date       TINYTEXT    NOT NULL,
         downloads_count     INT         NOT NULL,
 
-        FOREIGN KEY (mod) REFERENCES Users(username)
+        FOREIGN KEY (mod) REFERENCES Mods(name)
         );`);
 
     // Mods tags

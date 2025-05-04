@@ -51,10 +51,10 @@ async function createMod(mod_data, author) {
     mod_infos.full_description = await mdToHtml(mod_infos.full_description); // Convert
     await sanitizeModData(mod_data); // Sanitize
     //TODO
-    // mod_infos.creation_date = ...
+    mod_infos.creation_date = 0
 
     // Write changes to database
-    model.createMod(name, display_name, author, description, mod_data);
+    await model.createMod(name, display_name, author, description, mod_infos);
     
     // Return
     return getModByName(name);
@@ -117,7 +117,7 @@ async function deleteMod(name) {
 
     // Authorize
     // TODO move outside of this function
-    if (mod.author != mod.user) {
+    if (mod.author != mod.user) { 
         throw new AppError(403, "You don't have the necessary permissions to execute this action", "Forbidden");
     }
 

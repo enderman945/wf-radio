@@ -62,22 +62,27 @@ async function createMod(name, display_name, author, description, mod_infos) {
                                        [name, display_name, author, description]);
 
     // ModInfos table
-    await db.prepare(`INSERT INTO ModInfos (mod,  full_description, license,      links,            creation_date)
-                                    VALUES (?,    ?,                ?,            ?,                ?)`,       
-                                           [name, full_description, license.type, links.toString(), creation_date]);
+    await db.prepare(`INSERT INTO ModInfos (mod,  full_description, license,      links,            creation_date, downloads_count)
+                                    VALUES (?,    ?,                ?,            ?,                ?,             ?)`,       
+                                           [name, full_description, license.type, links.toString(), creation_date, 0]);
     
     // Tags
-    const tags_proc = addTags(name, tags, []);
+    if (tags) {
+        const tags_proc = addTags(name, tags, []);
+    }
+    
 
     // License
-    if (license_type == "custom") {
+    if (license.type == "custom") {
         await db.prepare(`UPDATE ModInfos SET custom_license = ? 
                                           WHERE mod = ?`, 
                                           [license.content, name]);
     }
 
     // Await
-    await tags_proc;
+    if (tags) {
+        await tags_proc;        
+    }
 
     return;
 }
