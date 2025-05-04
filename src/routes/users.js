@@ -6,7 +6,7 @@ const router = express.Router();
 // List users
 router.get("/", async (req,res) => {
         console.debug("Accessing users list");
-        controller.getAllUsers(req,res);
+        controller.listUsers(req,res);
 });
 
 // Create a user

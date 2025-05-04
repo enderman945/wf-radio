@@ -15,7 +15,7 @@ let config = {};
 
 // --- Default config ---
 
-const defaault_config = {
+const default_config = {
 
     "port": 8000,
 

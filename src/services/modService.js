@@ -50,6 +50,8 @@ async function createMod(mod_data, author) {
     const { name, display_name, description, mod_infos } = mod_data;
     mod_infos.full_description = await mdToHtml(mod_infos.full_description); // Convert
     await sanitizeModData(mod_data); // Sanitize
+    //TODO
+    // mod_infos.creation_date = ...
 
     // Write changes to database
     model.createMod(name, display_name, author, description, mod_data);
@@ -89,8 +91,8 @@ async function addTags(mod, tags) {
     await model.addTags(mod, tags);
 
     // Return
-    const { tags } = await model.getFullModInfos(mod);
-    return { "mod": mod, "tags": tags};
+    const { tags:res } = await model.getFullModInfos(mod);
+    return { "mod": mod, "tags": res};
 
 }
 
@@ -109,6 +111,9 @@ async function deleteMod(name) {
 
     // Check existence
     const mod = await model.getModByName(name);
+    if (!mod) {
+        throw new AppError(404, "No was found with this name", "Not found")
+    }
 
     // Authorize
     // TODO move outside of this function
@@ -137,13 +142,20 @@ async function deleteVersion(version_infos) {
     
     // Return
     return res;
-
-
 }
 
-async function deleteTags(tags) {
+async function deleteTags(mod, tags) {
     
-    // Check existence
+    // Validate (check existence)
+    //TODO
+    console.warn("Skipping validity checks for deleteTags");
+
+    // Wites changes to db
+    await model.deleteTags(mod, tags);
+    
+    // Return
+    const { tags:res } = await model.getFullModInfos(mod);
+    return { "mod": mod, "tags": res};
 }
 
 module.exports = { getAllMods, getModByName, getFullModInfos, 

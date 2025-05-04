@@ -1,47 +1,68 @@
 const handleError = require("../middleware/errors");
-const mod_service = require("../services/modService")
+const mod_service = require("../services/modService");
+const { authorizeModModification, authenticateToken } = require("../middleware/auth");
 
-async function getAllMods(req, res) {
+async function listMods(req, res) {
     try {
-        console.debug("Calling controller");
+        // Query
         const query_result = await mod_service.getAllMods();
         res.json(query_result);
     } catch (error) {
-        console.error("ERROR: Couldn't get mods: ");
-        handleError(error, req, res, null);
-    }
-}
-
-async function getModByName(req, res) {
-    try {
-        const query_result = await mod_service.getModByName(req.params.name);
-        res.json(query_result);
-    } catch (error) {
-        console.error("ERROR: Couldn't get mod " + req.params.name + ": ");
-        handleError(error, req, res, null);
+        handleError(error, res);
     }
 }
 
 async function createMod(req, res) {
     try {
-        await mod_service.createMod(req.body);
-        res.sendStatus(200);
+        // Authenticate
+        await authenticateToken(req);
+        // Query
+        const mod_data = req.body;
+        const user = req.token_infos.username;
+        const query_result = await mod_service.createMod(mod_data, user);
+        res.json(query_result);
     } catch (error) {
-        console.error("ERROR: Couldn't create mod:", error.message);
-        handleError(error, req, res, null);
+        handleError(error, res);
+    }
+}
+
+async function modifyMod(req, res) {
+    try {
+        // Authorize
+        authorizeModModification(req);
+        // Query
+        const mod_data = req.body;
+        const query_result = await mod_service.modifyMod(mod_data);
+        res.json(query_result);
+    } catch (error) {
+        handleError(error, res);
+    }
+}
+
+async function getModByName(req, res) {
+    try {
+        // Query
+        const name = req.params.name
+        const query_result = await mod_service.getModByName(name);
+        res.json(query_result);
+    } catch (error) {
+        handleError(error, res);
     }
 }
 
 async function deleteMod(req, res) {
     try {
-        await mod_service.deleteMod(req.params.name);
-        return res.sendStatus(200);
+        // Authorize
+        authorizeModModification(req);
+        // Query
+        const name = req.params.name
+        const query_result = await mod_service.deleteMod(name);
+        res.json(query_result);
     } catch (error) {
-        console.error("ERROR: Couldn't delete mod " + req.params.name + ":", error.message);
-        handleError(error, req, res, null);
+        handleError(error, res);
     }
 }
 
 
 
-module.exports = { getAllMods, getModByName, createMod, deleteMod };
+module.exports = { listMods, getModByName, createMod, modifyMod, deleteMod };

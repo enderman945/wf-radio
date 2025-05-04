@@ -10,12 +10,12 @@ async function connectDatabase() {
     const config = await getConfig();
 
     // Choose database type
-    if (config.type === "mysql") {
-        db = new MySQLDatabase(config);
-    } else if (config.type === "sqlite") {
-        db = new SQLiteDatabase(config);
+    if (config.database.type === "mysql") {
+        db = new MySQLDatabase(config.database);
+    } else if (config.database.type === "sqlite") {
+        db = new SQLiteDatabase(config.database);
     } else {
-        throw new Error("Invalid database type: ", config.type);
+        throw new Error("Invalid database type: ", config.database.type);
     }
     
     // Connect
@@ -40,8 +40,8 @@ async function initDatabase() {
         email           TINYTEXT    NOT NULL,
         password        TINYTEXT    NOT NULL,
         profile_picture LONGTEXT,
-        role            TINYTEXT,   NOT NULL,
-        settings        LONGTEXT,
+        role            TINYTEXT    NOT NULL,
+        settings        LONGTEXT
         );`);
 
     // --- Mods ---
@@ -53,7 +53,7 @@ async function initDatabase() {
         author          TINYTEXT    NOT NULL,
         description     TINYTEXT    NOT NULL,
 
-        FOREIGN KEY author REFERENCES Users(username)
+        FOREIGN KEY (author) REFERENCES Users(username)
         );`);
 
     // Mods complementary infos
@@ -66,7 +66,7 @@ async function initDatabase() {
         creation_date       TINYTEXT    NOT NULL,
         downloads_count     INT         NOT NULL,
 
-        FOREIGN KEY mod REFERENCES Users(username)
+        FOREIGN KEY (mod) REFERENCES Users(username)
         );`);
 
     // Mods tags
@@ -74,7 +74,7 @@ async function initDatabase() {
         mod         TINYTEXT    NOT NULL,
         tag         TINYTEXT    NOT NULL,
 
-        FOREIGN KEY mod REFERENCES Mods(name)
+        FOREIGN KEY (mod) REFERENCES Mods(name)
         );`);
 
     // Mods versions
@@ -89,7 +89,7 @@ async function initDatabase() {
         environment         TINYTEXT        NOT NULL,
         url                 TINYTEXT        NOT NULL,
 
-        FOREGIN KEY mod REFERENCES Mods(name)
+        FOREIGN KEY (mod) REFERENCES Mods(name)
         );`);
 
     // User favorites (mods)
@@ -97,8 +97,8 @@ async function initDatabase() {
         username    TINYTEXT    NOT NULL,
         mod         TINYTEXT    NOT NULL,
         
-        FOREIGN KEY username    REFERENCES Users(username),
-        FOREGIN KEY mod         REFERENCES Mods(name)
+        FOREIGN KEY (username)    REFERENCES Users(username),
+        FOREIGN KEY (mod)         REFERENCES Mods(name)
         );`);
 
 }

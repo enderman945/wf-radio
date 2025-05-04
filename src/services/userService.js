@@ -27,16 +27,18 @@ async function createUser(user_data) {
     return;
 }
 
-async function deleteUser(name) {
+async function deleteUser(name, token_user) {
 
     // Check existence
     const exists = await model.exists(name);
     if (!exists) {
-        throw new AppError(404, "Not found: Cannot find user with this name");
+        throw new AppError(404, "Cannot find user with this name", "Not found");
     }
 
     // Check authenticity
-    //TODO no auth provider
+    if (name != token_user) {
+        throw new AppError(401, "", "Unauthorized");
+    }
 
     model.deleteUser(name);
     return;

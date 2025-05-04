@@ -6,7 +6,7 @@ async function login(req, res) {
         const token = await authService.login(req.body.username, req.body.password);
         res.json({ token });
     } catch (err) {
-        handleError(err, req, res, null);
+        handleError(err, res);
     }
     
 }

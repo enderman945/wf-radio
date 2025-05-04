@@ -2,18 +2,19 @@
 
 const express = require("express");
 const app = express();
-const { loadConfig } = require("./src/utils/configManager");
+const configManager = require("./src/utils/configManager");
 const { connectDatabase, initDatabase  } = require('./src/database/index');
 
 
 // --- Load configuration ---
-const config = loadConfig();
+const config = configManager.loadConfig();
 
 // --- Body parsing ---
 app.use(express.json()); // Necessary to parse JSON bodies
 
 // Database connection
 (async () => {
+
 
     // --- Database connection ---
     await connectDatabase();
@@ -23,6 +24,7 @@ app.use(express.json()); // Necessary to parse JSON bodies
     app.use("/", require("./src/routes/index"));
     app.use("/mods", require("./src/routes/mods"));
     app.use("/users", require("./src/routes/users"));
+    app.use("/list", require("./src/routes/list"));
     app.use("/login", require("./src/routes/login"));
 
 })();
@@ -30,7 +32,7 @@ app.use(express.json()); // Necessary to parse JSON bodies
 
 // --- Launch ---
 
-const port = config.server.port;
+const port = config.port;
 app.listen(port, () => {
     console.log("Server listening on port " + port + "...");
 })

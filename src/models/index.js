@@ -1,8 +1,8 @@
-const { getVersion } = require("../utils/configManager");
+const configManager = require("../utils/configManager");
 
 async function getVersion() {
     
-    const version = await getVersion();
+    const version = await configManager.getVersion();
     const res = {
         version: version
     };

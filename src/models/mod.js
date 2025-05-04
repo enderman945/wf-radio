@@ -18,7 +18,7 @@ async function getModFullInfos(name) {
  
     // Query
     const base_infos = db.query(`SELECT * FROM Mods WHERE name = ?`, [name]);
-    const other_infos = db.query(`SELECT full_description, license, links, creation_date 
+    const other_infos = db.query(`SELECT full_description, license, links, creation_date, downloads_count 
                                         FROM ModInfos WHERE name = ?`, [name]);
     const tags = getModTags(name);
 
@@ -28,7 +28,7 @@ async function getModFullInfos(name) {
     return res;
 }
 
-async function getAllVersions(mod_name) { 
+async function listVersions(mod_name) { 
     return await db.query("SELECT * FROM ModVersions WHERE mod = ?", [mod_name]);
 }
 
@@ -162,7 +162,7 @@ async function updateModInfosAttribute(name, attribute, value) {
     return;
 }
 
-async function ModExists(name) {
+async function exists(name) {
     return db.exists("Mods", "name", name);
 }
 
@@ -179,8 +179,8 @@ async function containsTag(name, tag) {
 
 // --- Exports ---
 
-module.exports = { getAllMods, getModByName, getFullModInfos,
-                   getAllModVersions, getVersionByNumber, getVersion,
+module.exports = { getAllMods, getModByName, getModFullInfos,
+                   listVersions, getVersionByNumber, getVersion,
                    createMod, addVersion, addTags,
                    updateMod,
                    deleteMod, deleteVersion, deleteTags,

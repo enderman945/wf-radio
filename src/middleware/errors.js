@@ -1,6 +1,6 @@
 const AppError = require("../utils/appError");
 
-const handleError = (err, req, res, next) => {
+const handleError = (err, res) => {
     
     // Send error infos
     if (err instanceof AppError) {
