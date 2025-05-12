@@ -1,0 +1,32 @@
+
+#app {
+  padding: 2rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Logo */
+
+.logo.img {
+  position: absolute;
+  top: 1.6rem;
+  height: 6em;
+  padding: 1.5em;
+}
+
+.logo.text {
+
+  position: relative;
+  left: 4rem;
+  top: 1.3rem;
+
+  color: #eaeaea;
+  font-family: Inter;
+  font-weight: 600;
+
+  padding: 1.5em;
+
+  font-size: 3em;
+}

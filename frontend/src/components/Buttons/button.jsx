@@ -1,7 +1,8 @@
+import { h } from 'preact' // Necessary ?
 import styles from './button.module.css'
 
 function Button({ children, onClick, className, variant = 'primary', ...rest}) {
-    // Construct dynamic class names using CSS Modules
+
     const buttonClasses = `${styles.button} ${styles[variant] || ''} ${className || ''}`
 
     return (

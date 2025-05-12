@@ -1,9 +1,16 @@
 .button {
 
-    padding: .05em .1em;
+    color: #eaeaea;
+    font-family: inherit;
+    font-weight: 500;
 
-    border: 3em;
-    border-radius: 3px;
+    padding: 10px 15px;
+
+    border: .1em;
+    border-style: solid;
+    border-radius: .3em;
+
+    transition: 300ms;
 }
 
 .primary {
@@ -14,6 +21,8 @@
 .primary:hover {
     background-color: #353be5;
     border-color: #6b70f7;
+
+    filter: drop-shadow(#353be580 0 0 .7em);
 }
 
 .secondary {

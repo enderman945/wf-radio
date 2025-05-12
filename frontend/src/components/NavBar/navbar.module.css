@@ -1,0 +1,18 @@
+.navbar {
+    position: absolute;
+    top: 2.5rem;
+    right: 3rem;
+    left: 21rem;
+    
+    margin: 1rem;
+    height: 5rem;
+    
+    background-color: #1a1a1a;
+    color: #eaeaea;
+
+    border: #3a3a3a solid;
+    border-width: .1em;
+    border-radius: .5rem;
+
+
+}
