@@ -1,0 +1,37 @@
+.button {
+
+    padding: .05em .1em;
+
+    border: 3em;
+    border-radius: 3px;
+}
+
+.primary {
+    background-color: #353be5;
+    border-color: #4e53dc;
+}
+
+.primary:hover {
+    background-color: #353be5;
+    border-color: #6b70f7;
+}
+
+.secondary {
+    background-color: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+.secondary:hover {
+    background-color: #2a2a2a;
+    border-color: #3a3a3a;
+}
+
+.tertiary {
+    background-color: #eaeaea00;
+    border-color: #eaeaea;
+}
+
+.tertiary:hover {
+    background-color: #eaeaea16;
+    border-color: #eaeaea;
+}
