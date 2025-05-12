@@ -12,7 +12,7 @@ First make sure you have the following dependencies installed:
 - **Node.js**
 - **pnpm**
 
-Then download all needed packages using
+Then, for each of frontend and backend, download all needed packages using
 ```sh
 pnpm install
 ```
@@ -28,7 +28,7 @@ node server.js
 
 ## 🔧 Configuration
 
-All settings are located in [config/config.json](config/config.json). For more explainations and possible values, give a look to the documentation (incomming).
+All settings are located in [backend/config/config.json](backend/config/config.json). For more explainations and possible values, give a look to the documentation (incomming).
 
 ## 🔗 Documentation
 
