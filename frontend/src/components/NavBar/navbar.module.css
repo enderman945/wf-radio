@@ -14,5 +14,25 @@
     border-width: .1em;
     border-radius: .5rem;
 
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Vertically align items along the cross axis */
+    padding-left: 1em;
+}
 
+.navbar > a {
+    position: relative;
+    /* margin: 0 1.2em; */
+    padding: .2em .7em;
+
+    color: #eaeaea;
+    border-radius: .5rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+
+    transition: 200ms;
+}
+
+.navbar > a:hover {
+    background-color: #eaeaea10;
 }

@@ -5,6 +5,7 @@ import { useState } from 'preact/hooks'
 
 // Components
 import NavBar from './components/NavBar/navbar'
+import FiltersPanel from './components/Filters/panel'
 import Button from './components/Buttons/button'
 
 // Styles
@@ -30,6 +31,8 @@ export function App() {
       </Button>
 
       <NavBar></NavBar>
+      
+      <FiltersPanel></FiltersPanel>
     </>
   )
 }

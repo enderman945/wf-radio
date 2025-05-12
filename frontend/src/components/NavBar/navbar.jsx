@@ -4,12 +4,15 @@ import styles from './navbar.module.css'
 function NavBar({ children, className, ...rest}) {
 
     return (
-        <div
+        <nav
             className={styles.navbar}
             {...rest} // Allow passing other props like 'disabled', 'type', etc.
             >
                 {children}
-        </div>
+            <a href='index'> Home </a>
+            <a href='settings'> Mods </a>
+            <a href='settings'> Modpacks </a>
+        </nav>
     )
 }
 
