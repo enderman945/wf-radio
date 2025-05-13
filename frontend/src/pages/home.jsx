@@ -3,6 +3,7 @@ import { h } from 'preact';
 
 // Images
 import logo from '../assets/logo.png'
+import dl_icon from '../assets/download.svg'
 
 // Styles
 import '../styles/home.css'
@@ -15,12 +16,12 @@ function HomePage() {
 
   return (
     <>
-        <a href="https://wf.oblic-parallels.fr" target="_blank">
+        <div href="https://wf.oblic-parallels.fr" target="_blank">
             <img src={logo} class="logo img" alt="WF" />
             <a class="logo text"> radio </a>
-        </a>
+        </div>
         <div class='title'>An open place for mods</div>
-        <Button className='start-button'>Get started !</Button>
+        <Button className='start-button'>Get started</Button>
         <div class='background'></div>
         <div class='halo'></div>
     </>

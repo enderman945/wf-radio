@@ -2,6 +2,7 @@
 
 const express = require("express");
 const app = express();
+var cors = require('cors')
 const configManager = require("./src/utils/configManager");
 const { connectDatabase, initDatabase  } = require('./src/database/index');
 
@@ -11,6 +12,9 @@ const config = configManager.loadConfig();
 
 // --- Body parsing ---
 app.use(express.json()); // Necessary to parse JSON bodies
+
+// --- Cors ---
+app.use(cors());
 
 // Database connection
 (async () => {

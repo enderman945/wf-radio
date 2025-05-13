@@ -1,19 +1,13 @@
 import { h } from 'preact' // Necessary ?
-import styles from './button.module.css'
+import styles from './grid.module.css'
 
-function Button({ children, onClick, className, variant = 'primary', ...rest}) {
-
-    const buttonClasses = `${styles.button} ${styles[variant] || ''} ${className || ''}`
-
+function GridCard({item}) {
     return (
-        <button
-            className={buttonClasses}
-            onClick= {onClick}
-            {...rest} // Allow passing other props like 'disabled', 'type', etc.
-            >
-                {children}
-        </button>
+        <div className={styles.gridCard}>
+            This is a card !
+            {item.name}
+        </div>
     )
 }
 
-export default Button;
+export default GridCard;

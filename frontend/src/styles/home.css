@@ -34,7 +34,7 @@
 
 .start-button {
     position: fixed;
-    top: 38rem;
+    top: 48rem;
     left: 50%;
     transform: translate(-50%, -50%); /*Center (compensate size)*/
 
@@ -42,5 +42,4 @@
     text-align: center;
     font-weight: 600;
     font-size: 2rem;
-    letter-spacing: 0.1rem;
 }

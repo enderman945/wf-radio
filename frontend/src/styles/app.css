@@ -1,3 +1,28 @@
+/* Impports */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+:root {
+  font-family: 'IBM Plex Mono';
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #0c0c0c;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
+
 a {
   text-decoration: none;
 }
@@ -9,22 +34,26 @@ a {
   top: 1.6rem;
   left: 2rem;
   height: 6em;
+  
   padding: 1.5em;
+  
+  user-select: none;
 }
 
 .logo.text {
 
-  position: relative;
-  left: 5rem;
-  top: 3.3rem;
+  position: absolute;
+  left: 10rem;
+  top: 3.8rem;
+
+  margin: 0;
 
   color: #eaeaea;
   font-family: Inter;
   font-weight: 600;
-
-  padding: 1.5em;
-
   font-size: 3em;
+
+  user-select: none;
 }
 
 h1 {
@@ -53,10 +82,10 @@ h1 {
   min-height: 20rem;
   min-width: 50rem;
 
-  background-color: #1a1a1a;
+  /* background-color: #1a1a1a; */
   color: #eaeaea;
 
-  border: #3a3a3a solid;
+  /* border: #3a3a3a solid; */
   border-width: .1em;
   border-radius: .5rem;
 }

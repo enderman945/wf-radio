@@ -1,0 +1,76 @@
+.rowCard {
+
+    height: 7rem;
+    margin-bottom: 1rem;
+
+    background-color: #1a1a1a;
+    border: #3a3a3a .1rem solid;
+    border-radius: .5rem;
+}
+
+.thumbnail {
+    position: absolute;
+    /* top: 1rem; */
+    /* left: 1rem; */
+
+    margin: 0.93rem;
+
+    height: 5rem;
+    width: 5rem;
+
+    border: #3a3a3a .1rem solid;
+    border-radius: .5rem;
+}
+
+.titleDiv {
+    margin-left: 7rem;
+    margin-top: 1rem;
+}
+
+.title {
+
+    margin: 3rem 0;
+
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.author {
+    /* left: 17rem; */
+
+    /* margin: 1rem 0; */
+    color: #7a7a7a;
+}
+
+.description {
+    position: absolute;
+    left: 7rem;
+
+    margin: 3rem 0;
+    max-height: 10px;
+
+    color: #939393;
+    /*TODO limit height*/
+}
+
+.downloadButton {
+    position: absolute;
+    /* top: 1rem; */
+    right: 0;
+
+    margin: 0.8rem;
+
+
+    /* height: 5rem; */
+    /* width: 5rem; */
+
+    font-size: 1.1rem;
+    font-weight: 300;
+    border: #3a3a3a .1rem solid;
+    border-radius: .5rem;
+}
+
+.downloadIcon {
+    margin-bottom: -.35rem;
+    margin-right: .3rem;
+}

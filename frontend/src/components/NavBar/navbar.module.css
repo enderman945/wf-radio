@@ -32,6 +32,8 @@
     font-weight: 500;
 
     transition: 200ms;
+
+    user-select: none;
 }
 
 .leftItem:hover {
@@ -43,6 +45,8 @@
     margin-left: auto;
     margin-right: 2em;
     margin-top: .3em;
+
+    user-select: none;
 
     transition: 200ms;
 }

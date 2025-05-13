@@ -25,15 +25,15 @@ export function App() {
 
   return (
     <>
-
+      <NavBar></NavBar>
 
       <Router>
-        <HomePage path="/home" />
+        <HomePage path="/" />
         <ModsPage path="/mods" />
         {/* <AboutPage path="/about" /> */}
         <SettingsPage path="/settings" />
       </Router>
-      <NavBar></NavBar>
+
 
       {/* Here for nothing */}
       {/* <Button onClick={() => setCount((count) => count + 1)} style={{position: 'absolute', bottom: '10px'}}>
