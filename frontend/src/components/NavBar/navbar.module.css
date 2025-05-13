@@ -6,6 +6,7 @@
     
     margin: 1rem;
     height: 5rem;
+    min-width: 29rem; /* TODO update when changing navbar items (not automatic)*/
     
     background-color: #1a1a1a;
     color: #eaeaea;
@@ -16,13 +17,13 @@
 
     display: flex;
     flex-direction: row;
-    align-items: center; /* Vertically align items along the cross axis */
-    padding-left: 1em;
+    align-items: center;
+    padding-left: 2em;
 }
 
-.navbar > a {
+.leftItem {
     position: relative;
-    /* margin: 0 1.2em; */
+    margin: 0 .2em;
     padding: .2em .7em;
 
     color: #eaeaea;
@@ -33,6 +34,25 @@
     transition: 200ms;
 }
 
-.navbar > a:hover {
+.leftItem:hover {
     background-color: #eaeaea10;
+}
+
+/* WIP */
+.rightItem {
+    margin-left: auto;
+    margin-right: 2em;
+    margin-top: .3em;
+
+    transition: 200ms;
+}
+
+.rightItem > img {
+    border-radius: 100rem;
+    transition: 600ms;
+}
+
+.rightItem > img:hover {
+    background-color: #eaeaea10;
+    transform: rotate(180deg);
 }

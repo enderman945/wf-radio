@@ -2,10 +2,16 @@
 
 // Functions
 import { useState } from 'preact/hooks'
+import { Router } from 'preact-router';
+
+// Pages
+import HomePage from './pages/home';
+import ModsPage from './pages/mods';
+// import AboutPage from './pages/about';
+import SettingsPage from './pages/settings';
 
 // Components
 import NavBar from './components/NavBar/navbar'
-import FiltersPanel from './components/Filters/panel'
 import Button from './components/Buttons/button'
 
 // Styles
@@ -19,20 +25,21 @@ export function App() {
 
   return (
     <>
-      <div>
-        <a href="https://wf.oblic-parallels.fr" target="_blank">
-          <img src={logo} class="logo img" alt="WF" />
-          <a class="logo text"> radio </a>
-        </a>
-      </div>
 
-      <Button onClick={() => setCount((count) => count + 1)} style={{position: 'absolute', bottom: '10px'}}>
-        Autodesctruction in {count}
-      </Button>
 
+      <Router>
+        <HomePage path="/home" />
+        <ModsPage path="/mods" />
+        {/* <AboutPage path="/about" /> */}
+        <SettingsPage path="/settings" />
+      </Router>
       <NavBar></NavBar>
-      
-      <FiltersPanel></FiltersPanel>
+
+      {/* Here for nothing */}
+      {/* <Button onClick={() => setCount((count) => count + 1)} style={{position: 'absolute', bottom: '10px'}}>
+        Autodesctruction in {count}
+      </Button> */}
+
     </>
   )
 }

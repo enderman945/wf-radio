@@ -1,0 +1,46 @@
+.halo {
+    position: fixed;
+    z-index: -1;
+
+    height: 100vh;
+    width: 100vw;
+    background: radial-gradient(circle at 50% 200%,#353be5 0%, #353be5 45%, #00000000 80%);
+}
+
+.background {
+    position: fixed;
+    z-index: -3;
+
+    height: 100vh;
+    width: 100vw;
+    background-color: #000000;
+}
+
+.title {
+    position: fixed;
+    top: 26rem;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Center (compensate size)*/
+    z-index: -2;
+
+    color: #eaeaea;
+    text-align: center;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 500%;
+    user-select: none;
+    letter-spacing: 0.1rem;   
+}
+
+.start-button {
+    position: fixed;
+    top: 38rem;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Center (compensate size)*/
+
+    color: #eaeaea;
+    text-align: center;
+    font-weight: 600;
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+}
