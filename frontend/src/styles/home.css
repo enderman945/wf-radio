@@ -43,3 +43,15 @@
     font-weight: 600;
     font-size: 2rem;
 }
+
+.mainText {
+    position: absolute;
+    top: 48rem;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Center (compensate size)*/
+
+    color: #eaeaea;
+    font-size: 1.5em;
+    text-align: justify;
+
+}

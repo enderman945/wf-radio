@@ -1,0 +1,43 @@
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.input {
+
+  width: 100%;
+  padding: 0.75rem;
+
+  font-size: 1rem;
+  font-family: 'IBM Plex Mono';
+  color: #eaeaea;
+
+  background-color: #2a2a2a;
+  border: transparent;
+  border-bottom: .2em solid #3a3a3a;
+  border-radius: .2rem;
+  box-sizing: border-box; /* (ensure padding doesn't affect width) */
+
+}
+
+.input:focus {
+  outline: none;
+
+  border-color: #353be5;
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
+.inputError {
+  border-color: #de3535;
+}
+
+.errorMessage {
+  color: #de3535;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}

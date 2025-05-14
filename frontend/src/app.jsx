@@ -7,8 +7,11 @@ import { Router } from 'preact-router';
 // Pages
 import HomePage from './pages/home';
 import ModsPage from './pages/mods';
-// import AboutPage from './pages/about';
+import ModpacksPage from './pages/modpacks';
+import AboutPage from './pages/about';
 import SettingsPage from './pages/settings';
+import ModPage from './pages/mod_page'
+import ModCreationPage from './pages/mod_creation'
 
 // Components
 import NavBar from './components/NavBar/navbar'
@@ -30,8 +33,12 @@ export function App() {
       <Router>
         <HomePage path="/" />
         <ModsPage path="/mods" />
-        {/* <AboutPage path="/about" /> */}
+        <ModpacksPage path="/modpacks" />
+        <AboutPage path="/about" />
         <SettingsPage path="/settings" />
+
+        <ModPage path="/mods/:name"></ModPage>
+        <ModCreationPage path="/create/mod" ></ModCreationPage>
       </Router>
 
 

@@ -43,7 +43,7 @@ async function getModByName(req, res) {
     try {
         // Query
         const name = req.params.name
-        const query_result = await mod_service.getModByName(name);
+        const query_result = await mod_service.getFullModInfos(name);
         res.json(query_result);
     } catch (error) {
         handleError(error, res);

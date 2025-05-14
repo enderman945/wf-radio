@@ -18,6 +18,7 @@
     height: 5rem;
     width: 5rem;
 
+    background-color: #2a2a2a;
     border: #3a3a3a .1rem solid;
     border-radius: .5rem;
 }
@@ -33,6 +34,8 @@
 
     font-size: 1.4rem;
     font-weight: 600;
+
+    color: #ffffff;
 }
 
 .author {

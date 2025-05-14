@@ -14,22 +14,23 @@ async function getModByName(name) {
 
 }
 
-async function getModFullInfos(name) {
+async function getFullModInfos(name) {
  
     // Query
     const base_infos = db.query(`SELECT * FROM Mods WHERE name = ?`, [name]);
     const other_infos = db.query(`SELECT full_description, license, links, creation_date, downloads_count 
-                                        FROM ModInfos WHERE name = ?`, [name]);
-    const tags = getModTags(name);
+                                        FROM ModInfos WHERE mod = ?`, [name]);
+    const tags = listTags(name);
 
-    // Merge
-    const res = {...await base_infos, ...await other_infos, ...tags};
-
-    return res;
+    return [await base_infos, await other_infos, await tags];
 }
 
 async function listVersions(mod_name) { 
     return await db.query("SELECT * FROM ModVersions WHERE mod = ?", [mod_name]);
+}
+
+async function listTags(mod_name) {
+    return await db.query(`SELECT tag FROM ModTags WHERE mod = ?`, [mod_name]);
 }
 
 async function getVersionByNumber(mod_name, version_number) {
@@ -184,8 +185,8 @@ async function containsTag(name, tag) {
 
 // --- Exports ---
 
-module.exports = { getAllMods, getModByName, getModFullInfos,
-                   listVersions, getVersionByNumber, getVersion,
+module.exports = { getAllMods, getModByName, getFullModInfos,
+                   listVersions, listTags, getVersionByNumber, getVersion,
                    createMod, addVersion, addTags,
                    updateMod,
                    deleteMod, deleteVersion, deleteTags,

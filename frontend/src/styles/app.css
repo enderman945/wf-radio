@@ -22,6 +22,10 @@ body {
   margin: 0;
 }
 
+* {
+  transition: 200ms;
+}
+
 
 a {
   text-decoration: none;
@@ -52,6 +56,33 @@ a {
   font-family: Inter;
   font-weight: 600;
   font-size: 3em;
+
+  user-select: none;
+}
+
+.logoSmall.img {
+  position: absolute;
+  top: 1.5rem;
+  left: .5rem;
+  height: 6em;
+  
+  padding: 1.5em;
+  
+  user-select: none;
+}
+
+.logoSmall.text {
+
+  position: absolute;
+  left: 8rem;
+  top: 4.1rem;
+
+  margin: 0;
+
+  color: #eaeaea;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 2.5em;
 
   user-select: none;
 }
@@ -94,16 +125,43 @@ h1 {
   position: absolute;
   top: 11rem;
   right: 4rem;
-  left: 4rem;
+  left: 22rem;
   bottom: 4rem;
 
   padding: 3rem;
 
-  background-color: #101010;
+  background-color: #1a1a1a;
   color: #eaeaea;
 
   border: #3a3a3a solid;
   border-width: .1em;
   border-radius: .5rem;
 
+}
+
+/* Page transitions */
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease-out; /* Adjust duration and easing */
+}
+
+.page-enter {
+  opacity: 0;
+}
+
+.page-enter-active {
+  opacity: 1;
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
 }

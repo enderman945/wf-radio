@@ -13,3 +13,51 @@ export async function fetchMods() {
     return [];
   }
 }
+
+export async function fetchMod(mod_name) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/mods/${mod_name}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch items:', error);
+    return null;
+  }
+}
+
+export async function login(username, password) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+      method: 'POST',
+      body: JSON.stringify({ username: username, password: password })
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch items:', error);
+    return null;
+  }
+}
+
+export async function createMod(username, password) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+      method: 'POST',
+      body: JSON.stringify({ }) //TODO
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch items:', error);
+    return null;
+  }
+}

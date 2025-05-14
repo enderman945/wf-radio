@@ -13,6 +13,10 @@
     transition: 300ms;
 }
 
+.button:hover {
+    cursor: pointer;
+}
+
 .primary {
     background-color: #353be5;
     border-color: #4e53dc;

@@ -12,7 +12,7 @@ async function getAllMods() {
 }
 
 async function getModByName(name) {
-    const res = model.getModByName(name);
+    const res = await model.getModByName(name);
     if (res.length == 0) {
         throw new AppError(404, "Cannot find mod with this name", "Not found");
     }
@@ -20,16 +20,20 @@ async function getModByName(name) {
 }
 
 async function getFullModInfos(name) {
-    const res = model.getFullModInfos(name);
-    if (res.length == 0) {
-        throw new AppError(404, "Cannot find mod with this name", "Not found");
+    const [base_infos, other_infos, tags] = await model.getFullModInfos(name);
+    // Check
+    if (base_infos.length == 0 || other_infos.length === 0) {
+        throw new AppError(404, "Cannot find mod with this name", "Not found", "Couldn't retrieve from database correctly");
     }
-    return res[0];
+    // Merge
+    const mod_infos = {...other_infos[0], tags: tags} 
+    const res = {...base_infos[0], mod_infos: mod_infos};
+    return res;
 }
 
 async function getModVersion(infos) {
     const { mod, version_number, game_version, platform, environment} = infos;
-    const res = model.getModVersion(mod, version_number, game_version, platform, environment);
+    const res = await model.getModVersion(mod, version_number, game_version, platform, environment);
     if (res.length == 0) {
         throw new AppError(404, "Cannot find mod with this name", "Not found");
     }
@@ -51,7 +55,7 @@ async function createMod(mod_data, author) {
     mod_infos.full_description = await mdToHtml(mod_infos.full_description); // Convert
     await sanitizeModData(mod_data); // Sanitize
     //TODO
-    mod_infos.creation_date = 0
+    mod_infos.creation_date = Date.now();
 
     // Write changes to database
     await model.createMod(name, display_name, author, description, mod_infos);

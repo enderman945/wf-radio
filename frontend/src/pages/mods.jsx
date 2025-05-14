@@ -12,7 +12,6 @@ import FiltersPanel from '../components/Filters/panel'
 import logo from '../assets/logo.png'
 
 // Styles
-import '../styles/mods.css'
 import GridCard from '../components/Cards/grid';
 import RowCard from '../components/Cards/row';
 
@@ -51,16 +50,12 @@ function ModsPage() {
         return <div>Couldn't load mods: {error}</div>
     }
 
-    // Debugging
-    console.debug(mods);
-    const testArray = [(1, 'a'), (2, 'b'), (3, 'c')];
-
     return (
       <>
-        <div href="https://wf.oblic-parallels.fr" target="_blank">
+        <a href="https://radio.oblic-parallels.fr" target="_blank">
             <img src={logo} class="logo img" alt="WF" />
-            <a class="logo text"> radio </a>
-        </div>
+            <p class="logo text"> mods </p>
+        </a>
         <FiltersPanel></FiltersPanel>
         <div class='content-container'>
             {/* <GridCard>Test card</GridCard> */}
@@ -70,11 +65,6 @@ function ModsPage() {
                 console.debug(mod.name);
                 // return <div key={mod.name}>Test</div>
                 return <RowCard key={mod.name} item={mod}/>
-            })}
-
-            {testArray.map((item, index) => {
-                // <GridCard key={key}><GridCard/>
-                console.debug(index, item)
             })}
         </div>
       </>

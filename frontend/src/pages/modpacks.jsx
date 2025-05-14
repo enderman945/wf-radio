@@ -12,20 +12,19 @@ import '../styles/home.css'
 import Button from '../components/Buttons/button';
 
 
-function HomePage() {
+function ModpacksPage() {
 
   return (
     <>
         <a href='https://radio.oblic-parallels.fr' target="_blank">
-              <img src={logo} class="logo img" alt="WF" />
-              <a class="logo text"> radio </a>
+              <img src={logo} class="logoSmall img" alt="WF" />
+              <a class="logoSmall text"> modpacks </a>
         </a>
-        <div class='title'>An open place for mods</div>
-        <Button className='start-button' href='/mods'>Get started</Button>
+        <div class='title'>Coming soon™</div>
         <div class='background'></div>
         <div class='halo'></div>
     </>
   );
 }
 
-export default HomePage;
+export default ModpacksPage;

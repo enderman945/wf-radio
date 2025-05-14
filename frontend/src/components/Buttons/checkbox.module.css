@@ -1,0 +1,51 @@
+/*TODO made by AI */
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none; /* Prevent text selection on click */
+}
+
+.nativeCheckbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.customCheckbox {
+  position: relative;
+  display: inline-block;
+  width: 20px; /* Adjust size as needed */
+  height: 20px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 3px; /* Optional rounded corners */
+}
+
+.customCheckbox:hover input ~ .checkmark {
+  background-color: #ddd;
+}
+
+.nativeCheckbox:checked ~ .customCheckbox {
+  background-color: #2196F3; /* Active color */
+  border: 1px solid #2196F3;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Checkmark color */
+  font-size: 16px; /* Adjust checkmark size */
+}
+
+.label {
+  margin-left: 8px;
+}
