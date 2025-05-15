@@ -84,6 +84,34 @@
     width: 20em;
 }
 
+.descriptionField {
+
+    margin-top: -.01rem;
+    margin-left: 1rem;
+
+    height: 7em;
+    min-width: 20em;
+    display: inline-flex;
+    flex-grow: 1;
+}
+
+.fullDescriptionField {
+    min-width: 20em;
+    height: 100%;
+}
+
+.topFields {
+    display: flex;
+    width: 100%;
+}
+
+.middleFields {
+    /* display: flex;
+    justify-content: right; */
+    height: 35vh;
+    min-height: 12em;
+}
+
 .createButton {
     position: absolute;
     bottom: 1em;

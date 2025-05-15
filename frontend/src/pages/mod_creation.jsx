@@ -7,6 +7,7 @@ import { createMod } from '../services/api';
 
 // Components
 import InputField from '../components/Fields/input_field'
+import TextArea from '../components/Fields/text_area'
 
 // Images
 import logo from '../assets/logo.png'
@@ -34,30 +35,61 @@ function ModCreationPage() {
             <div className={styles.container}>
                 <div className={styles.form}>
 
-                    {/* Name */}
-                    <InputField
-                        id="name"
-                        name="name"
-                        value={mod_infos.name}
-                        // onChange={handleNameChange}
-                        // error={nameError}
-                        placeholder="name"
-                        required
-                        className={styles.smallField}
-                        >
-                        </InputField>
+                    <div className={styles.topFields}>
+                        <div>
+                            {/* Name */}
+                            <InputField
+                                id="name"
+                                name="name"
+                                value={mod_infos.name}
+                                // onChange={handleNameChange}
+                                // error={nameError}
+                                placeholder="name"
+                                required
+                                className={styles.smallField}
+                                >
+                                </InputField>
 
-                        {/* Display name */}
-                        <InputField
-                        id="display_name"
-                        name="display_name"
+                                {/* Display name */}
+                                <InputField
+                                id="display_name"
+                                name="display_name"
+                                value={mod_infos.display_name}
+                                // onChange={handleNameChange}
+                                // error={nameError}
+                                placeholder="display_name"
+                                className={styles.smallField}
+                                >
+                            </InputField>
+                        </div>
+
+                        {/* Description */}
+                        <TextArea
+                        id="description"
+                        name="description"
                         value={mod_infos.display_name}
                         // onChange={handleNameChange}
                         // error={nameError}
-                        placeholder="display_name"
-                        className={styles.smallField}
+                        placeholder="description"
+                        containerClass={styles.descriptionField}
                         >
-                    </InputField>
+                    </TextArea>
+                    </div>
+
+                    <div className={styles.middleFields}>
+                        {/* Full description */}
+                        <TextArea
+                        id="full_description"
+                        name="full_description"
+                        value={mod_infos.display_name}
+                        // onChange={handleNameChange}
+                        // error={nameError}
+                        placeholder="full_description"
+                        containerClass={styles.fullDescriptionField}
+                        >
+                        </TextArea>
+
+                    </div>
 
                     <Button className={styles.createButton}>
                         Create

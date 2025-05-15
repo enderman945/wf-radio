@@ -50,7 +50,7 @@
     left: 50%;
     transform: translate(-50%, -50%); /*Center (compensate size)*/
 
-    color: #eaeaea;
+    color: #eaeaead0;
     font-size: 1.5em;
     text-align: justify;
 
