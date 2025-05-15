@@ -89,7 +89,7 @@ function ModPage({name}) {
                                 <circle cx="11" cy="11" r="10" stroke="#3a3a3a" stroke-width="1" fill="#1a1a1a" />
                             </svg>
                             <div className={styles.version}>
-                                v3.0
+                                v3.0 (latest)
                             </div> 
                         </a>
                         <a href={"/notfound"}>

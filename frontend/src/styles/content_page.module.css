@@ -82,7 +82,7 @@
   background: url("https://resources.oblic-parallels.fr/example.jpg");
   background-size: cover;
   border-top-right-radius: .4rem;
-  -webkit-mask-image: radial-gradient(ellipse at top right, black 0%, #00000010 50%, transparent 70%);
+  mask-image: radial-gradient(ellipse at top right, black 0%, #00000010 50%, transparent 70%);
 
   z-index: 0;
 }
@@ -164,7 +164,8 @@
     margin-bottom: 2em;
     margin-left: 1em;
 
-    padding: .2em;
+    padding: .2em .4em;
+    width: fit-content;
 
     color: #8a8a8a;
     font-size: 1.3em;

@@ -6,12 +6,18 @@ import { Router } from 'preact-router';
 
 // Pages
 import HomePage from './pages/home';
-import ModsPage from './pages/mods';
-import ModpacksPage from './pages/modpacks';
 import AboutPage from './pages/about';
-import SettingsPage from './pages/settings';
+
+import ModsPage from './pages/mods';
 import ModPage from './pages/mod_page'
 import ModCreationPage from './pages/mod_creation'
+
+import ModpacksPage from './pages/modpacks';
+
+import LoginPage from './pages/login';
+import RegisterPage from './pages/register';
+import SettingsPage from './pages/settings';
+
 
 // Components
 import NavBar from './components/NavBar/navbar'
@@ -39,6 +45,9 @@ export function App() {
 
         <ModPage path="/mods/:name"></ModPage>
         <ModCreationPage path="/create/mod" ></ModCreationPage>
+
+        <LoginPage path='/login'></LoginPage>
+        <RegisterPage path='/register'></RegisterPage>
       </Router>
 
 

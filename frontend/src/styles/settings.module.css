@@ -1,0 +1,46 @@
+.tabsContainer {
+    position: absolute;
+    left: 4rem;
+    top: 11rem;
+    bottom: 4rem;
+    /* right: 97rem; */
+
+    width: 15rem;
+
+    border-radius: .5rem;
+
+    /* background-color: #1a1a1a; */
+
+}
+
+.tab {
+    position: relative;
+    left: 4rem;
+    right: 0;
+    /* transform: translate(-50% , -50%); */
+
+    margin: 1em 0;
+
+    padding: .2em .4em;
+    width: fit-content;
+
+    color: #8a8a8a;
+    font-size: 1.5em;
+    border-radius: .5em;
+
+    transition: 200ms;
+}
+
+.tab:hover {
+    background-color: #3a3a3a;
+}
+
+.logout {
+    color: #c24040;
+    cursor: pointer;
+}
+
+.logout:hover {
+    color: #eaeaea;
+    background-color: #bc3939;
+}

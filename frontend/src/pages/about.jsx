@@ -18,7 +18,7 @@ function AboutPage() {
     <>
         <a href='https://radio.oblic-parallels.fr' target="_blank">
               <img src={logo} class="logo img" alt="WF" />
-              <a class="logo text"> radio </a>
+              <p class="logo text"> radio </p>
         </a>
         <div class='title'>About us</div>
         <div class='background'></div>

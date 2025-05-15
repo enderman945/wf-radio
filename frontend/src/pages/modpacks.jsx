@@ -18,7 +18,7 @@ function ModpacksPage() {
     <>
         <a href='https://radio.oblic-parallels.fr' target="_blank">
               <img src={logo} class="logoSmall img" alt="WF" />
-              <a class="logoSmall text"> modpacks </a>
+              <p class="logoSmall text"> modpacks </p>
         </a>
         <div class='title'>Coming soon™</div>
         <div class='background'></div>

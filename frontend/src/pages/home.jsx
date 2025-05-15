@@ -18,7 +18,7 @@ function HomePage() {
     <>
         <a href='https://radio.oblic-parallels.fr' target="_blank">
               <img src={logo} class="logo img" alt="WF" />
-              <a class="logo text"> radio </a>
+              <p class="logo text"> radio </p>
         </a>
         <div class='title'>An open place for mods</div>
         <Button className='start-button' href='/mods'>Get started</Button>

@@ -1,45 +1,89 @@
+// Preact
 import { h } from 'preact';
-import { useState } from 'preact/hooks'; // If you need state for settings
+import { useState, useEffect } from 'preact/hooks'; // If you need state for settings
+import Cookies from 'js-cookie'
+import { jwtDecode } from 'jwt-decode'
+
+// Styles
+import styles from '../styles/settings.module.css'
+
+// Images
+import Logo from '../assets/logo.png'
+
 
 function SettingsPage() {
 
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState('dark');
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+    const [user, setUser] = useState(null)
+
+
+    useEffect( () => {
+            const token = Cookies.get('authToken');
+            if (token) {
+                setUser(token);
+            }
+        },
+    [])
 
     const handleThemeChange = (event) => {
         setTheme(event.target.value);
         // Save theme preference (e.g., to local storage)
     };
 
-  const handleNotificationsChange = (event) => {
-        setNotificationsEnabled(event.target.checked);
-    // Save notification preference
-  };
+    const handleNotificationsChange = (event) => {
+            setNotificationsEnabled(event.target.checked);
+        // Save notification preference
+    };
 
-  return (
-    <>
-        <h1>Settings</h1>
-        <div className='container'>
-            <div>
-                <label htmlFor="theme">Theme:</label>
-                <select id="theme" value={theme} onChange={handleThemeChange}>
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                </select>
+    const logout = () => {
+        Cookies.remove('authToken');
+        location.replace('/');
+    }
+
+    return (
+        <>
+            <a href='/'>
+                    <img src={Logo} class="logoSmall img" alt="WF" />
+                    <p class="logoSmall text"> settings </p>
+            </a>
+            <div className={styles.tabsContainer}>
+                <a href='/settings'>
+                    <p className={styles.tab}>Global</p>
+                </a>
+                <a href='/notfound'>
+                    <p className={styles.tab}>User</p>
+                </a>
+                {user ? (
+                    <a onClick={() => {logout()}}>
+                        <p className={`${styles.tab} ${styles.logout}`}>Logout</p>
+                    </a>
+                ) : 
+                ''
+                }
+                
             </div>
-            <div>
-                <label>
-                Enable Notifications:
-                <input
-                    type="checkbox"
-                    checked={notificationsEnabled}
-                    onChange={handleNotificationsChange}
-                />
-                </label>
-            </div>
-        </div> 
-    </>
-  );
+            <div className='container'>
+                <div>
+                    <label htmlFor="theme">Theme:</label>
+                    <select id="theme" value={theme} onChange={handleThemeChange}>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+                <div>
+                    <label>
+                    Enable Notifications:
+                    <input
+                        type="checkbox"
+                        checked={notificationsEnabled}
+                        onChange={handleNotificationsChange}
+                    />
+                    </label>
+                </div>
+            </div> 
+        </>
+    );
 }
 
 export default SettingsPage;

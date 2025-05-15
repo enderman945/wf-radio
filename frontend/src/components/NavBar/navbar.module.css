@@ -42,21 +42,48 @@
 
 /* WIP */
 .rightItem {
-    margin-left: auto;
-    margin-right: 2em;
-    margin-top: .3em;
+    margin: 0 1em;
 
     user-select: none;
 
     transition: 200ms;
 }
 
-.rightItem > img {
+.rightItems {
+    margin-left: auto;
+    margin-right: 1em;
+    margin-top: .3em;
+
+    display: flex;
+
+}
+
+.settings {
     border-radius: 100rem;
     transition: 600ms;
 }
 
-.rightItem > img:hover {
+.profile {
+    border-radius: 100rem;
+    transition: 300ms;
+}
+
+.login {
+    border-radius: .5rem;
+    transition: 600ms;
+    margin-top: .06em;
+    height: 80%;
+}
+
+.login:hover {
+    background-color: #eaeaea10;
+}
+
+.settings:hover {
     background-color: #eaeaea10;
     transform: rotate(180deg);
+}
+
+.profile:hover {
+    background-color: #eaeaea10;
 }
