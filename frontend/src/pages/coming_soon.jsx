@@ -3,7 +3,6 @@ import { h } from 'preact';
 
 // Images
 import logo from '../assets/logo.png'
-import dl_icon from '../assets/download.svg'
 
 // Styles
 import '../styles/home.css'
@@ -12,7 +11,7 @@ import '../styles/home.css'
 import Button from '../components/Buttons/button';
 
 
-function HomePage() {
+function ComingSoonPage() {
 
   return (
     <>
@@ -20,12 +19,11 @@ function HomePage() {
               <img src={logo} class="logo img" alt="WF" />
               <p class="logo text"> radio </p>
         </a>
-        <div class='title'>An open place for mods</div>
-        <Button className='start-button' href='/mods'>Get started</Button>
+        <div class='title'>Coming soon™</div>
         <div class='background'></div>
         <div class='halo'></div>
     </>
   );
 }
 
-export default HomePage;
+export default ComingSoonPage;

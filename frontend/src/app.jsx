@@ -7,6 +7,8 @@ import { Router } from 'preact-router';
 // Pages
 import HomePage from './pages/home';
 import AboutPage from './pages/about';
+import NotFoundPage from './pages/not_found';
+import ComingSoonPage from './pages/coming_soon';
 
 import ModsPage from './pages/mods';
 import ModPage from './pages/mod_page'
@@ -48,6 +50,9 @@ export function App() {
 
         <LoginPage path='/login'></LoginPage>
         <RegisterPage path='/register'></RegisterPage>
+
+        <ComingSoonPage path='/soon'></ComingSoonPage>
+        <NotFoundPage path='/notfound' default ></NotFoundPage>
       </Router>
 
 

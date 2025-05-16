@@ -39,6 +39,9 @@
 .leftItem:hover {
     background-color: #eaeaea10;
 }
+.leftItem:active {
+    background-color: #eaeaea20;
+}
 
 /* WIP */
 .rightItem {

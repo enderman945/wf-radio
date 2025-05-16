@@ -2,6 +2,7 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode'
 
 // Images
 import logo from '../assets/logo.png'
@@ -14,7 +15,7 @@ import Button from '../components/Buttons/button';
 import InputField from '../components/Fields/input_field';
 
 // Functions
-import { login } from '../services/api';
+import { login } from '../services/auth';
 
 
 function LoginPage() {
@@ -41,8 +42,8 @@ function LoginPage() {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); // Prevent the default form submission
-        setFieldErrors({ name: null, email: null, message: null });
+        event.preventDefault();
+        setFieldErrors({ username: null, password: null});
 
         setLoginStatus('logging in');
 
@@ -53,8 +54,12 @@ function LoginPage() {
             setLoginStatus('success');
 
             if (response && response.token) {
+                const decoded_token = jwtDecode(response.token);
+                if (!decoded_token) {
+                    throw new Error("Couldn't decode token");
+                }
                 Cookies.set('authToken', response.token, {
-                    expires: 30,
+                    expires: decoded_token.exp, //TODO not sure if it's the right value
                     path: '/',
                     secure: true, // only send over https
                     sameSite: 'strict'

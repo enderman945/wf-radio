@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
 // Functions
-import { fetchMod } from '../services/api';
+import { getMod } from '../services/mods';
 
 // Components
 
@@ -28,7 +28,7 @@ function ModPage({name}) {
                 setLoading(true);
                 setError(false);
                 try {
-                    const fetched_mod = await fetchMod(name);
+                    const fetched_mod = await getMod(name);
                     setMod(fetched_mod);
                 } catch (err) {
                     setError(err.message);
@@ -39,23 +39,49 @@ function ModPage({name}) {
     
             loadItems();
         }, []); // <-- Tells useEffect to run once after render
+
+        const base_page = (
+            <>
+                <a href="/">
+                    <img src={logo} class="logo img" alt="WF" />
+                    <p class="logo text"> mods </p>
+                </a>
+            </>
+        );
     
         if (loading) {
             // TODO replace by loading screen
-            return <div>Loading mod</div>
+            return (
+                <>
+                    {base_page}
+                    <div className={styles.container}>
+                        <div className={styles.content}>
+                            <p className={styles.title}>Loading...</p>
+                        </div>
+                        <div className={styles.infosPanel}> </div>
+                    </div>
+                </>
+            );
         }
         if (error) {
             // TODO replace by popup
-            return <div>Couldn't load mod: {error}</div>
+                return (
+                <>
+                    {base_page}
+                    <div className={styles.container}>
+                        <div className={styles.content}>
+                            <p className={styles.title}>Couldn't load this mod</p>
+                            <p className={styles.fullDescription}>{error}</p>
+                        </div>
+                        <div className={styles.infosPanel}> </div>
+                    </div>
+                </>
+            );
         }
 
     return (
         <>
-            <a href="/">
-                <img src={logo} class="logo img" alt="WF" />
-                <p class="logo text"> mods </p>
-            </a>
-
+            {base_page}
             <div className={styles.container}>
                 <div className={styles.content}>
                     <div className={styles.backgroundImage}></div>

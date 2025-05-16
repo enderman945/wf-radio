@@ -139,6 +139,10 @@ h1 {
 
 }
 
+.loadingContent {
+  color: #7a7a7a;
+}
+
 /* Page transitions */
 
 .page {

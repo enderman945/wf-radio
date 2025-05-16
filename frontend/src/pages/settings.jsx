@@ -44,20 +44,22 @@ function SettingsPage() {
     return (
         <>
             <a href='/'>
-                    <img src={Logo} class="logoSmall img" alt="WF" />
-                    <p class="logoSmall text"> settings </p>
+                    <img src={Logo} className={styles.logo} alt="WF" />
+                    <p className={styles.logoTitle}> settings </p>
             </a>
             <div className={styles.tabsContainer}>
                 <a href='/settings'>
                     <p className={styles.tab}>Global</p>
                 </a>
-                <a href='/notfound'>
-                    <p className={styles.tab}>User</p>
-                </a>
                 {user ? (
-                    <a onClick={() => {logout()}}>
-                        <p className={`${styles.tab} ${styles.logout}`}>Logout</p>
-                    </a>
+                    <>
+                        <a href='/notfound'>
+                            <p className={styles.tab}>User</p>
+                        </a>
+                        <a onClick={() => {logout()}}>
+                            <p className={`${styles.tab} ${styles.logout}`}>Logout</p>
+                        </a>
+                    </>
                 ) : 
                 ''
                 }

@@ -16,7 +16,7 @@ function AboutPage() {
 
   return (
     <>
-        <a href='https://radio.oblic-parallels.fr' target="_blank">
+        <a href='/' target="_blank">
               <img src={logo} class="logo img" alt="WF" />
               <p class="logo text"> radio </p>
         </a>

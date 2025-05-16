@@ -1,0 +1,10 @@
+{
+    "port": 8100,
+
+    "backend": {
+        "address": "localhost",
+        "port": 8000,
+        "protocol": "http",
+        "path": "/"
+    }
+}

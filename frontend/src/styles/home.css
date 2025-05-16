@@ -32,6 +32,38 @@
     letter-spacing: 0.1rem;   
 }
 
+.bigTitle {
+    position: fixed;
+    top: 26rem;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Center (compensate size)*/
+    z-index: -2;
+
+    color: #eaeaea;
+    text-align: center;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 8rem;
+    user-select: none;
+    letter-spacing: 0.1rem;   
+}
+
+.subtitle {
+    position: fixed;
+    top: 34rem;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Center (compensate size)*/
+    z-index: -2;
+
+    color: #eaeaea;
+    text-align: center;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 500%;
+    user-select: none;
+    letter-spacing: 0.1rem;  
+}
+
 .start-button {
     position: fixed;
     top: 48rem;

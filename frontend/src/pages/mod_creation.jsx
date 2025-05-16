@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
 // Functions
-import { createMod } from '../services/api';
+import { createMod } from '../services/mods';
 
 // Components
 import InputField from '../components/Fields/input_field'
