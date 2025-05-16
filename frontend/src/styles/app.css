@@ -24,11 +24,18 @@ body {
 
 * {
   transition: 200ms;
+  -webkit-user-drag: none;
 }
 
 
 a {
   text-decoration: none;
+}
+
+
+::selection {
+  color: #ffffff;
+  background: #353be5;
 }
 
 /* Logo */
@@ -87,6 +94,8 @@ a {
   user-select: none;
 }
 
+/* Titles */
+
 h1 {
   position: absolute;
   left: 0rem;
@@ -101,6 +110,7 @@ h1 {
   font-size: 3em;
 }
 
+/* Containers */
 
 .content-container {
 
@@ -136,6 +146,8 @@ h1 {
   border: #3a3a3a solid;
   border-width: .1em;
   border-radius: .5rem;
+
+  overflow: scroll;
 
 }
 

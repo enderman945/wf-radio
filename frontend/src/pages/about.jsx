@@ -26,7 +26,7 @@ function AboutPage() {
         <div class='mainText'>
             WF radio is a platform for all your personnal mods and modpacks. 
             The difference with already existing big platforms is that radio is self-hosted and open-source.
-            It's meant for your personnal works that you don't want to publish on the said platforms, but feel free to use it the way you want.
+            It's meant for your personnal works that you don't want to publish on the these platforms, but feel free to use it the way you want.
             Don't hesitate to learn more about the project with the link below (not here yet).
         </div>
     </>

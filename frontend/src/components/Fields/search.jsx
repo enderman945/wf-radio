@@ -1,52 +1,53 @@
+// Preact
 import { h } from 'preact';
-import { useState } from 'preact/hooks';
-import { searchMods } from '../services/api'; // Your API fetching function
-import styles from './SearchBar.module.css'; // Optional: CSS Modules
+import { useState, useRef, useEffect } from 'preact/hooks';
 
-function SearchBar({ onResults }) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+// Images
+import SearchIcon from '../../assets/search.svg'
 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+// Styles
+import styles from './search.module.css'; // Optional: CSS Modules
 
-  const handleSearch = async () => {
-    if (!searchTerm.trim()) {
-      onResults([]); // Clear results if search term is empty
-      return;
-    }
 
-    setLoading(true);
-    setError(null);
+function SearchBar({ onSearch }) {
 
-    try {
-      const results = await searchItems(searchTerm);
-      onResults(results); // Pass the fetched results to the parent component
-    } catch (err) {
-      setError('Failed to fetch search results.');
-      onResults([]); // Clear results on error
-    } finally {
-      setLoading(false);
-    }
-  };
+    const [search_input, setSearchInput] = useState('');
+      const timeout_id = useRef(null);
 
-  return (
-    <div className={styles.searchBarContainer}>
-      <input
-        type="text"
-        placeholder="Search items..."
-        value={searchTerm}
-        onChange={handleInputChange}
-        className={styles.searchInput}
-      />
-      <button onClick={handleSearch} className={styles.searchButton} disabled={loading}>
-        {loading ? 'Searching...' : 'Search'}
-      </button>
-      {error && <div className={styles.errorMessage}>{error}</div>}
-    </div>
-  );
+    const handleInputChange = (event) => {
+
+        const new_search_input = event.target.value;
+        setSearchTerm(new_search_input);
+
+        if (timeout_id.current) {
+            clearTimeout(timeout_id.current);
+        }
+
+        timeout_id.current = setTimeout(() => {
+            onSearch(newSearchTerm);
+        }, 500);
+    };
+
+    useEffect(() => {
+        return () => {
+            if (timeout_id.current) {
+                clearTimeout(timeout_id.current);
+            }
+        };
+    }, []);
+
+    return (
+        <div className={styles.searchBarContainer}>
+        <img src={SearchIcon} className={styles.searchIcon}></img>
+            <input
+                type="text"
+                placeholder="Search"
+                value={search_input}
+                onChange={handleInputChange}
+                className={styles.searchBarInput}
+            />
+        </div>
+    );
 }
 
 export default SearchBar;

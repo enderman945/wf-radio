@@ -30,7 +30,7 @@ export async function createMod(mod_data) {
 }
 
 
-export async function listMods() {
+export async function listMods(filters) {
   try {
     const response = await fetch(`${API_BASE_URL}/list/mods`);
     if (!response.ok) {

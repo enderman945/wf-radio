@@ -59,6 +59,7 @@
 
 .tab:hover {
     background-color: #eaeaea20;
+    cursor: pointer;
 }
 
 .tab:active {
@@ -73,4 +74,15 @@
 .logout:hover {
     color: #eaeaea;
     background-color: #bc3939;
+}
+
+.title {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 2em;
+}
+
+.category {
+    background: none; /*Only to remove the empty warning for the moment */
 }

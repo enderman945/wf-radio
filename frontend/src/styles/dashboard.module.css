@@ -1,0 +1,71 @@
+.category {
+    margin-top: 0;
+}
+
+.title {
+    margin-top: 0;
+
+    color: #eaeaea;
+    font-size: 1.6em;
+    font-weight: 600;
+
+    user-select: none;
+}
+
+.tiles {
+
+    height: 13rem;
+    margin-bottom: 3rem;
+
+    overflow-x: scroll;
+    overflow-y: visible;
+    display: flex;
+
+    gap: 2em;
+}
+
+.toolbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 5rem;
+    padding: .5rem;
+
+    /* background-color: #9a9a9a; */
+}
+
+.toolbarRightItems {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+
+}
+.createButton {
+    font-size: 1.4rem;
+}
+
+.emptyTile {
+    height: 99%;
+    width: 22em;
+    align-items: center;
+    display: flex;
+
+    background-color: #141414;
+    border: #3a3a3a .1rem solid;
+    border-radius: 1rem;
+}
+
+.emptyTileText {
+
+    padding: 1em;
+    width: 100%;
+
+    color: #9a9a9a;
+
+    text-align: center;
+    vertical-align: middle;
+
+    user-select: none;
+}

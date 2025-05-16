@@ -10,8 +10,8 @@ import styles from './navbar.module.css'
 
 // Images
 import Settings from '../../assets/settings.svg'
-import Login from '../../assets/login_small.svg'
-import Account from '../../assets/account.svg'
+import Login from '../../assets/login.svg'
+import Dashboard from '../../assets/dashboard.svg'
 
 function NavBar({ children, className, ...rest}) {
 
@@ -43,19 +43,19 @@ function NavBar({ children, className, ...rest}) {
             
             <div className={styles.rightItems}>
             
-            {/* Display login button, or profile picture if connected */}
+            {/* Display login button, or dashboard if connected */}
             {user ? (
-                <a className={styles.rightItem} href={'/users/' + user.username}>
-                    <img src={Account} width={'170%'} className={styles.profile}></img>
+                <a className={styles.rightItem} href={'/dashboard'}>
+                    <img src={Dashboard} className={styles.dashboard}></img>
                 </a>
             ) : (
                 <a className={styles.rightItem} href='/login'>
-                    <img src={Login} width={'170%'} className={styles.login}></img>
+                    <img src={Login} className={styles.login}></img>
                 </a>
             )
             }
             <a className={styles.rightItem} href='/settings'> 
-                    <img src={Settings} width={'170%'} className={styles.settings}></img>
+                    <img src={Settings} className={styles.settings}></img>
                 </a>
             </div>
 

@@ -16,7 +16,7 @@ import Button from '../components/Buttons/button';
 import InputField from '../components/Fields/input_field';
 
 // Functions
-import { register } from '../services/auth';
+import { register } from '../services/users';
 
 
 function RegisterPage() {

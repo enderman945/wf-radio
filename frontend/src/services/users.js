@@ -25,8 +25,6 @@ export async function login(username, password) {
 
 export async function register(user_data) {
   try {
-    console.debug(user_data);
-    console.debug(JSON.stringify(user_data));
     const response = await fetch(`${API_BASE_URL}/users`, {
       method: 'POST',
       headers: {
@@ -34,6 +32,25 @@ export async function register(user_data) {
       },
       body: JSON.stringify(user_data)
     });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    // console.error('Failed to fetch items:', error);
+    throw error;
+  }
+}
+
+export async function deleteUser(username) {
+  try {
+    const authToken = Cookies.get('authToken');
+    const response = await fetch(`${API_BASE_URL}/users/${username}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': authToken,
+      }});
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

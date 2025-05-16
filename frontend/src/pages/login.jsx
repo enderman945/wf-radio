@@ -15,7 +15,7 @@ import Button from '../components/Buttons/button';
 import InputField from '../components/Fields/input_field';
 
 // Functions
-import { login } from '../services/auth';
+import { login } from '../services/users';
 
 
 function LoginPage() {
@@ -129,7 +129,8 @@ function LoginPage() {
                         type='submit'
                         disabled={loginStatus === 'logging in'}
                         >
-                            {loginStatus === 'logging in' ? 'Logging in' : 'Login'}
+                            {loginStatus === 'logging in' ? 'Logging in' : 
+                            loginStatus === 'success' ? 'Success' : 'Login'}
                     </Button>
                     <Button 
                         className={styles.loginButton}

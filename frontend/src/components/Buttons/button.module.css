@@ -48,3 +48,14 @@
     background-color: #eaeaea16;
     border-color: #eaeaea;
 }
+
+.delete {
+    background-color: #de3535;
+    border-color: #e85f5f;
+}
+
+.delete:hover {
+    border-color: #fb7777;
+    filter: drop-shadow(#de3535 0 0 .6em);
+
+}

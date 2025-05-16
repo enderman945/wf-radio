@@ -16,6 +16,7 @@ import ModCreationPage from './pages/mod_creation'
 
 import ModpacksPage from './pages/modpacks';
 
+import DashboardPage from './pages/dashboard';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
 import SettingsPage from './pages/settings';
@@ -44,6 +45,8 @@ export function App() {
         <ModpacksPage path="/modpacks" />
         <AboutPage path="/about" />
         <SettingsPage path="/settings" />
+
+        <DashboardPage path="/dashboard"/>
 
         <ModPage path="/mods/:name"></ModPage>
         <ModCreationPage path="/create/mod" ></ModCreationPage>

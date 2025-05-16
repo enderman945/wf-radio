@@ -1,0 +1,42 @@
+.searchBarContainer {
+
+    margin-bottom: 1rem;
+    /* padding: 0.5rem 1.2rem; */
+    box-sizing: border-box;
+
+    background-color: #242424;
+    border: transparent;
+    border: .1rem solid #3a3a3a;
+    border-radius: 20rem;
+
+    display: flex;
+}
+
+.searchBarInput {
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0.5em;
+
+    font-size: 1rem;
+    font-family: 'IBM Plex Mono';
+    color: #ffffffc0;
+
+    background-color: transparent;
+    border: transparent;
+}
+
+.searchBarInput:focus {
+    outline: none;
+
+    color: #ffffff;
+}
+
+.searchIcon {
+    margin-left: 1em;
+    width: 1.6em;
+
+    user-select: none;
+}

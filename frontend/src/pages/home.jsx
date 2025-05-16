@@ -21,7 +21,7 @@ function HomePage() {
               <p class="logo text"> radio </p>
         </a>
         <div class='title'>An open place for mods</div>
-        <Button className='start-button' href='/mods'>Get started</Button>
+        <Button className='start-button' href='/mods'>Start exploring</Button>
         <div class='background'></div>
         <div class='halo'></div>
     </>

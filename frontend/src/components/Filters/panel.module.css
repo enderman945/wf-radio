@@ -9,6 +9,7 @@
     margin: 1rem;
     width: 18rem;
     min-height: 40rem;
+    padding: 1.3rem;
     
     background-color: #1a1a1a;
     color: #eaeaea;
@@ -16,4 +17,5 @@
     border: #3a3a3a solid;
     border-width: .1em;
     border-radius: .5rem;
+    box-sizing: border-box;
 }

@@ -7,6 +7,7 @@ import { listMods } from '../services/mods';
 
 // Components
 import FiltersPanel from '../components/Filters/panel'
+import SearchBar from '../components/Fields/search';
 
 // Images
 import logo from '../assets/logo.png'
@@ -18,18 +19,32 @@ import RowCard from '../components/Cards/row';
 
 function ModsPage() {
 
-    // UseState
+    // List mods
     const [mods, setMods] = useState([]);
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    // Filters
+    const [search_input, setSearchInput] = useState('');
+    const [selected_categories, setSelectedCategories] = useState([]);
+
+    const handleSearch = (new_search_input) => {
+        setSearchInput(new_search_input);
+    };
 
     // UseEffect
     useEffect(() => {
+
         async function loadItems() {
+            
             setLoading(true);
             setError(false);
+            
             try {
-                const fetched_mods = await listMods();
+                const filters = {
+                    search: search_input,
+                    categories: selected_categories
+                };
+                const fetched_mods = await listMods(filters);
                 setMods(fetched_mods);
             } catch (err) {
                 setError(err.message);
@@ -48,7 +63,10 @@ function ModsPage() {
                 <img src={logo} class="logo img" alt="WF" />
                 <p class="logo text"> mods </p>
             </a>
-            <FiltersPanel></FiltersPanel>
+            <FiltersPanel>                    
+                <SearchBar onSearch={handleSearch} />
+                
+            </FiltersPanel>
         </>
     );
 
@@ -91,7 +109,7 @@ function ModsPage() {
             {mods.map((mod) => {
                 console.debug(mod.name);
                 // return <div key={mod.name}>Test</div>
-                return <RowCard key={mod.name} item={mod}/>
+                return <RowCard key={mod.name} item={mod} />
             })}
         </div>
       </>

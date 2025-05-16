@@ -4,6 +4,12 @@ import { useState, useEffect } from 'preact/hooks'; // If you need state for set
 import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 
+// Functions
+import { deleteUser } from '../services/users';
+
+// Components
+import Button from '../components/Buttons/button';
+
 // Styles
 import styles from '../styles/settings.module.css'
 
@@ -16,12 +22,17 @@ function SettingsPage() {
     const [theme, setTheme] = useState('dark');
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [user, setUser] = useState(null)
+    const [tab, setTab] = useState('global');
 
 
     useEffect( () => {
             const token = Cookies.get('authToken');
             if (token) {
-                setUser(token);
+                const decoded_token = jwtDecode(token);
+                if (decoded_token && decoded_token.username) {
+                    setUser(decoded_token.username);
+                }
+                
             }
         },
     [])
@@ -36,7 +47,18 @@ function SettingsPage() {
         // Save notification preference
     };
 
-    const logout = () => {
+    const handleUserDeletion = async () => {
+        try {
+            await deleteUser(user);
+            handleLogout();
+        } catch (error) {
+            console.error("Couldn't delete account: ", error);
+        }
+
+
+    }
+
+    const handleLogout = () => {
         Cookies.remove('authToken');
         location.replace('/');
     }
@@ -48,15 +70,15 @@ function SettingsPage() {
                     <p className={styles.logoTitle}> settings </p>
             </a>
             <div className={styles.tabsContainer}>
-                <a href='/settings'>
+                <a onClick={() => {setTab('global')}}>
                     <p className={styles.tab}>Global</p>
                 </a>
                 {user ? (
                     <>
-                        <a href='/notfound'>
+                        <a onClick={() => {setTab('user')}}>
                             <p className={styles.tab}>User</p>
                         </a>
-                        <a onClick={() => {logout()}}>
+                        <a onClick={() => {handleLogout()}}>
                             <p className={`${styles.tab} ${styles.logout}`}>Logout</p>
                         </a>
                     </>
@@ -66,23 +88,46 @@ function SettingsPage() {
                 
             </div>
             <div className='container'>
-                <div>
-                    <label htmlFor="theme">Theme:</label>
-                    <select id="theme" value={theme} onChange={handleThemeChange}>
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                    </select>
-                </div>
-                <div>
-                    <label>
-                    Enable Notifications:
-                    <input
-                        type="checkbox"
-                        checked={notificationsEnabled}
-                        onChange={handleNotificationsChange}
-                    />
-                    </label>
-                </div>
+                { tab === 'global' ? (
+                        <>
+                            <p>
+                                <label htmlFor="theme">Theme:</label>
+                                <select id="theme" value={theme} onChange={handleThemeChange}>
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                </select>
+                            </p>
+                            <p>
+                                <label>
+                                Enable Notifications:
+                                <input
+                                    type="checkbox"
+                                    checked={notificationsEnabled}
+                                    onChange={handleNotificationsChange}
+                                />
+                                </label>
+                            </p>
+                        </>
+                    ) :
+                    tab === 'user' ? (
+                        <>
+                            <div className={styles.category}>
+                                <p className={styles.title}>Danger zone</p>
+                                <Button 
+                                    variant='delete'
+                                    style='font-size: 1.2rem'
+                                    onClick={handleUserDeletion}
+                                    > 
+                                        Delete account
+                                </Button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                        </>
+                    )
+                }
+
             </div> 
         </>
     );
