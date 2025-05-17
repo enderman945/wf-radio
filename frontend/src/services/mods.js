@@ -32,31 +32,48 @@ export async function createMod(mod_data) {
 
 
 export async function listMods(filters) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/list/mods`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
+    try {
+        let url_parameters = ""; 
+
+        // Parse filters
+        for (const [key, value] of Object.entries(filters)) {
+            if (url_parameters === "") {
+                url_parameters += "?"
+            } else {
+                url_parameters += "&"
+            }
+
+            url_parameters += `${key}=${value}`;
+        }
+
+        // Query 
+        const response = await fetch(`${API_BASE_URL}/list/mods/${url_parameters}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // Return
+        const data = await response.json();
+        return data;
+
   } catch (error) {
-    console.error('Failed to fetch mods:', error);
-    throw error;
+        console.error('Failed to fetch mods:', error);
+        throw error;
   }
 }
 
 
 export async function getMod(mod_name) {
   try {
-    const response = await fetch(`${API_BASE_URL}/mods/${mod_name}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
+        const response = await fetch(`${API_BASE_URL}/mods/${mod_name}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
   } catch (error) {
-    console.error('Failed to fetch mod:', error);
-    throw error;
+        console.error('Failed to fetch mod:', error);
+        throw error;
   }
 }
 

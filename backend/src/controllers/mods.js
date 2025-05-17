@@ -5,7 +5,8 @@ const { authorizeModModification, authenticateToken } = require("../middleware/a
 async function listMods(req, res) {
     try {
         // Query
-        const query_result = await mod_service.getAllMods();
+        const filters = req.query;
+        const query_result = await mod_service.listMods(filters);
         res.json(query_result);
     } catch (error) {
         handleError(error, res);

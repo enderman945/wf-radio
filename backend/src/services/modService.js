@@ -7,8 +7,14 @@ const { sanitizeModData } = require("../utils/sanitize");
 
 // --- Get ---
 
-async function getAllMods() {
-    return model.getAllMods();
+async function listMods(filters) {
+    //TODO Validate filters
+    console.warn("Skipping full filters validation: Not implemented");
+
+    filters.author = filters.author || null;
+    filters.search = filters.search || null;
+
+    return await model.listMods({...filters});
 }
 
 async function getModByName(name) {
@@ -162,7 +168,7 @@ async function deleteTags(mod, tags) {
     return { "mod": mod, "tags": res};
 }
 
-module.exports = { getAllMods, getModByName, getFullModInfos, 
+module.exports = { listMods, getModByName, getFullModInfos, 
                    createMod, addTags, addVersion,
                    updateMod,
                    deleteMod, deleteTags, deleteVersion };

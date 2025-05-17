@@ -17,14 +17,14 @@ function SearchBar({ onSearch }) {
     const handleInputChange = (event) => {
 
         const new_search_input = event.target.value;
-        setSearchTerm(new_search_input);
+        setSearchInput(new_search_input);
 
         if (timeout_id.current) {
             clearTimeout(timeout_id.current);
         }
 
         timeout_id.current = setTimeout(() => {
-            onSearch(newSearchTerm);
+            onSearch(new_search_input);
         }, 500);
     };
 
@@ -43,7 +43,7 @@ function SearchBar({ onSearch }) {
                 type="text"
                 placeholder="Search"
                 value={search_input}
-                onChange={handleInputChange}
+                onInput={handleInputChange}
                 className={styles.searchBarInput}
             />
         </div>

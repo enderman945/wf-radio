@@ -28,7 +28,7 @@ class SQLiteDatabase {
     // Runs with a result (ex: SELECT)
     async query(sql, params = []) {
         try {
-            if (params.length > 0) {
+            if ( params != []) {
               return this.db.prepare(sql).all(params);
             } else {
               return this.db.prepare(sql).all();

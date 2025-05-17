@@ -60,7 +60,6 @@ function ModPage({name}) {
         if (token) {
             const decoded_token = jwtDecode(token);
             if (decoded_token) {
-                console.debug('Here');
                 if (decoded_token.username === mod.author) {
                     setOwner(true);
                 }

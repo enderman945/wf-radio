@@ -5,12 +5,21 @@ const db = getDatabase();
 
 // --- Get ---
 
-async function getAllMods() { 
-    return await db.query("SELECT name, display_name, author, description FROM Mods");
+async function listMods(filters) { 
+    console.debug(filters);
+    return await db.query(`SELECT name, display_name, author, description FROM Mods
+                            WHERE
+                            (CASE WHEN @search IS NOT NULL THEN 
+                                name         LIKE '%' || @search || '%' OR
+                                display_name LIKE '%' || @search || '%' OR
+                                description  LIKE '%' || @search || '%'
+                             ELSE TRUE END) AND
+                            (CASE WHEN @author IS NOT NULL THEN author = @author ELSE TRUE END);
+                            `, filters);
 }
 
 async function getModByName(name) {
-    return await db.query("SELECT name, display_name, author FROM Mods WHERE name = ?;", [name]);
+    return await db.query("SELECT name, display_name, author FROM Mods WHERE name = @name;", {name: name});
 
 }
 
@@ -185,7 +194,7 @@ async function containsTag(name, tag) {
 
 // --- Exports ---
 
-module.exports = { getAllMods, getModByName, getFullModInfos,
+module.exports = { listMods, getModByName, getFullModInfos,
                    listVersions, listTags, getVersionByNumber, getVersion,
                    createMod, addVersion, addTags,
                    updateMod,

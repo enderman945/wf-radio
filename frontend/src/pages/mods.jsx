@@ -31,30 +31,32 @@ function ModsPage() {
         setSearchInput(new_search_input);
     };
 
-    // UseEffect
-    useEffect(() => {
 
-        async function loadItems() {
-            
-            setLoading(true);
-            setError(false);
-            
-            try {
-                const filters = {
-                    search: search_input,
-                    categories: selected_categories
-                };
-                const fetched_mods = await listMods(filters);
-                setMods(fetched_mods);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
+    async function loadItems() {
+    
+        setLoading(true);
+        setError(false);
+        
+        try {
+            const filters = {
+                search: search_input,
+            };
+            console.debug("Searching", search_input);
+            const fetched_mods = await listMods(filters);
+            setMods(fetched_mods);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
         }
+    }
 
+
+    // useEffect
+    useEffect(() => {
         loadItems();
-    }, []); // <-- Tells useEffect to run once after render
+    }, [search_input]);
+
 
     // Base page
     const base_page = (
