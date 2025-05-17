@@ -53,7 +53,7 @@ async function initDatabase() {
         author          TINYTEXT    NOT NULL,
         description     TINYTEXT    NOT NULL,
 
-        FOREIGN KEY (author) REFERENCES Users(username)
+        FOREIGN KEY (author) REFERENCES Users(username) ON DELETE CASCADE
         );`);
 
     // Mods complementary infos
@@ -66,7 +66,7 @@ async function initDatabase() {
         creation_date       TINYTEXT    NOT NULL,
         downloads_count     INT         NOT NULL,
 
-        FOREIGN KEY (mod) REFERENCES Mods(name)
+        FOREIGN KEY (mod) REFERENCES Mods(name) ON DELETE CASCADE
         );`);
 
     // Mods tags
@@ -74,7 +74,7 @@ async function initDatabase() {
         mod         TINYTEXT    NOT NULL,
         tag         TINYTEXT    NOT NULL,
 
-        FOREIGN KEY (mod) REFERENCES Mods(name)
+        FOREIGN KEY (mod) REFERENCES Mods(name) ON DELETE CASCADE
         );`);
 
     // Mods versions
@@ -89,7 +89,7 @@ async function initDatabase() {
         environment         TINYTEXT        NOT NULL,
         url                 TINYTEXT        NOT NULL,
 
-        FOREIGN KEY (mod) REFERENCES Mods(name)
+        FOREIGN KEY (mod) REFERENCES Mods(name) ON DELETE CASCADE
         );`);
 
     // User favorites (mods)
@@ -97,8 +97,8 @@ async function initDatabase() {
         username    TINYTEXT    NOT NULL,
         mod         TINYTEXT    NOT NULL,
         
-        FOREIGN KEY (username)    REFERENCES Users(username),
-        FOREIGN KEY (mod)         REFERENCES Mods(name)
+        FOREIGN KEY (username)    REFERENCES Users(username) ON DELETE CASCADE,
+        FOREIGN KEY (mod)         REFERENCES Mods(name) ON DELETE CASCADE
         );`);
 
 }

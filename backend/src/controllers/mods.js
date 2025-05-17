@@ -29,7 +29,7 @@ async function createMod(req, res) {
 async function modifyMod(req, res) {
     try {
         // Authorize
-        authorizeModModification(req);
+        await authorizeModModification(req);
         // Query
         const mod_data = req.body;
         const query_result = await mod_service.modifyMod(mod_data);

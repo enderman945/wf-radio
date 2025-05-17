@@ -1,3 +1,5 @@
+//! Not implemented
+
 class MySQLDatabase {
     constructor(config) {
         const mysql = require("mysql2/promise");

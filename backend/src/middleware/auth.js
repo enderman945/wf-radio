@@ -15,7 +15,7 @@ async function authenticateToken(req) {
 
     try {
         req.token_infos = await verifyToken(token);
-        console.debug("Authorizing token from", req.token_infos);
+        // console.debug("Authorizing token from", req.token_infos);
     } catch (err) {
         throw new AppError(403, "Forbidden: Error verifying the authorization token");
     }

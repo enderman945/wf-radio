@@ -35,7 +35,7 @@ async function exists(name) {
 async function createUser( username, email, password, displayName, profilePicture, settings ) {
 
     // Create user
-    await db.prepare(`INSERT INTO Users (username, email, password, display_name, role ) 
+    await db.run(`INSERT INTO Users (username, email, password, display_name, role ) 
                                  VALUES (?,        ?,     ?,        ?,            ?    )`, 
                                         [username, email, password, displayName, "user"]);
 
@@ -86,11 +86,11 @@ async function updateUser(username, display_name, email, profile_picture, settin
 }
 
 async function updateUserPassword(username, password) {
-    await db.prepare(`UPDATE Users SET password = ? WHERE username = ?`, [password, username]);
+    await db.run(`UPDATE Users SET password = ? WHERE username = ?`, [password, username]);
 }
 
 async function updateUserAttribute(username, attribute, value) {
-    await db.prepare(`UPDATE Users SET ${attribute} = ? WHERE username = ?`, [value, username]);
+    await db.run(`UPDATE Users SET ${attribute} = ? WHERE username = ?`, [value, username]);
     return;
 }
 
@@ -98,7 +98,7 @@ async function updateUserAttribute(username, attribute, value) {
 // --- Delete ---
 
 async function deleteUser(username) {
-    await db.prepare("DELETE FROM Users WHERE username = ?", [username]);
+    await db.run("DELETE FROM Users WHERE username = ?", [username]);
     return;
 }
 

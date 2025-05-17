@@ -58,12 +58,12 @@ async function createMod(name, display_name, author, description, mod_infos) {
     const { full_description, license, links, creation_date, tags } = mod_infos; 
 
     // Mods table
-    await db.prepare("INSERT INTO Mods (name, display_name, author, description) \
+    await db.run("INSERT INTO Mods (name, display_name, author, description) \
                                 VALUES (?,    ?,            ?,      ?)",       
                                        [name, display_name, author, description]);
 
     // ModInfos table
-    await db.prepare(`INSERT INTO ModInfos (mod,  full_description, license,      links,            creation_date, downloads_count)
+    await db.run(`INSERT INTO ModInfos (mod,  full_description, license,      links,            creation_date, downloads_count)
                                     VALUES (?,    ?,                ?,            ?,                ?,             ?)`,       
                                            [name, full_description, license.type, links.toString(), creation_date, 0]);
     
@@ -75,7 +75,7 @@ async function createMod(name, display_name, author, description, mod_infos) {
 
     // License
     if (license.type == "custom") {
-        await db.prepare(`UPDATE ModInfos SET custom_license = ? 
+        await db.run(`UPDATE ModInfos SET custom_license = ? 
                                           WHERE mod = ?`, 
                                           [license.content, name]);
     }
@@ -90,7 +90,7 @@ async function createMod(name, display_name, author, description, mod_infos) {
 
 async function addVersion(mod, version_number, channel, changelog, release_date, game_version, platform, environment, url) {
 
-    await db.prepare(`INSERT INTO ModVersions (mod, version_number, channel, changelog, release_date, game_version, environment, platform, url)
+    await db.run(`INSERT INTO ModVersions (mod, version_number, channel, changelog, release_date, game_version, environment, platform, url)
                                        VALUES (?,   ?,              ?,       ?,         ?,            ?,            ?,           ?,        ?);`,
                                               [mod, version_number, channel, changelog, release_date, game_version, environment, platform, url]);
     return;
@@ -130,12 +130,12 @@ async function updateMod(name, display_name, author, description) {
 // --- Delete ---
 
 async function deleteMod(name) {
-    await db.prepare("DELETE FROM Mods WHERE name = ?", [name]);
+    await db.run("DELETE FROM Mods WHERE name = ?", [name]);
     return;
 }
 
 async function deleteVersion(name, version_number, game_version, platform, environment) {
-    await db.prepare(`DELETE FROM ModVersions WHERE mod = ? 
+    await db.run(`DELETE FROM ModVersions WHERE mod = ? 
                                                 AND version_number = ?
                                                 AND game_version = ?
                                                 AND platform = ?
@@ -159,12 +159,12 @@ async function deleteTags(mod, tags) {
 // --- Utils ---
 
 async function updateModAttribute(name, attribute, value) {
-    await db.prepare(`UPDATE Mods SET ${attribute} = ? WHERE name = ?`, [value, name]);
+    await db.run(`UPDATE Mods SET ${attribute} = ? WHERE name = ?`, [value, name]);
     return;
 }
 
 async function updateModInfosAttribute(name, attribute, value) {
-    await db.prepare(`UPDATE ModInfos SET ${attribute} = ? WHERE name = ?`, [value, name]);
+    await db.run(`UPDATE ModInfos SET ${attribute} = ? WHERE name = ?`, [value, name]);
     return;
 }
 
