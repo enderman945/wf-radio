@@ -1,11 +1,14 @@
 // Preact
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
+import Cookies from 'js-cookie'
+import { jwtDecode } from 'jwt-decode'
 
 // Functions
-import { getMod } from '../services/mods';
+import { getMod, deleteMod } from '../services/mods';
 
 // Components
+import Button from '../components/Buttons/button';
 
 // Images
 import logo from '../assets/logo.png'
@@ -22,23 +25,47 @@ function ModPage({name}) {
     const [mod, setMod] = useState({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [owner, setOwner] = useState(false);
+
     // UseEffect
-        useEffect(() => {
-            async function loadItems() {
-                setLoading(true);
-                setError(false);
-                try {
-                    const fetched_mod = await getMod(name);
-                    setMod(fetched_mod);
-                } catch (err) {
-                    setError(err.message);
-                } finally {
-                    setLoading(false);
+    useEffect(() => {
+        // Load mod informations
+        async function loadItems() {
+            setLoading(true);
+            setError(false);
+            try {
+                const fetched_mod = await getMod(name);
+                setMod(fetched_mod);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadItems();
+
+    }, []); // <-- Tells useEffect to run once after render
+
+    // Handles
+    const handleDeleteMod = async () => {
+        await deleteMod(mod.name);
+        location.replace('/dashboard');
+    };
+
+        // Load user informations
+        //TODO use a service
+        //? for some reason, doesn't work inside useEffect
+        const token = Cookies.get('authToken');
+        if (token) {
+            const decoded_token = jwtDecode(token);
+            if (decoded_token) {
+                console.debug('Here');
+                if (decoded_token.username === mod.author) {
+                    setOwner(true);
                 }
             }
-    
-            loadItems();
-        }, []); // <-- Tells useEffect to run once after render
+        }
 
         const base_page = (
             <>
@@ -86,7 +113,10 @@ function ModPage({name}) {
                 <div className={styles.content}>
                     <div className={styles.backgroundImage}></div>
                     <p className={styles.title}>{mod.display_name || mod.name }</p>
-                    <p className={styles.fullDescription}>{mod.mod_infos.full_description || "No description"}</p>
+                    <div className={styles.fullDescription}>
+                        {/* Sanitized by the backend */}
+                        <p dangerouslySetInnerHTML={{ __html: (mod.mod_infos.full_description || "No description") }} />
+                        </div>
                 </div>
                 
 
@@ -136,6 +166,22 @@ function ModPage({name}) {
                             </div>
                         </a>
                     </div>
+
+                    { owner ? (
+                        <div className={styles.panelActions}>
+                            <Button
+                                variant='delete'
+                                className={styles.deleteButton}
+                                onClick={handleDeleteMod}
+                                >
+                                    Delete
+                            </Button>
+                        </div>
+                        ) : (
+                            <> </>
+                        )
+                    }
+                    
 
                 </div>
             </div>

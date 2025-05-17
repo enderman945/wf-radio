@@ -53,7 +53,7 @@ async function getModByName(req, res) {
 async function deleteMod(req, res) {
     try {
         // Authorize
-        authorizeModModification(req);
+        await authorizeModModification(req);
         // Query
         const name = req.params.name
         const query_result = await mod_service.deleteMod(name);

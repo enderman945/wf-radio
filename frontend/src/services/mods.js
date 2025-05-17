@@ -7,7 +7,7 @@ export async function createMod(mod_data) {
     try {
         const auth_token = Cookies.get('authToken');
 
-        const response = await fetch(`${API_BASE_URL}/login`, {
+        const response = await fetch(`${API_BASE_URL}/mods`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -17,6 +17,7 @@ export async function createMod(mod_data) {
         });
 
         if (!response.ok) {
+            console.error(response.body); //TODO integrate body to error
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
@@ -24,7 +25,7 @@ export async function createMod(mod_data) {
         return data;
 
     } catch (error) {
-        console.error('Failed to fetch items:', error);
+        console.error('Failed to create mod:', error);
         throw error;
     }
 }
@@ -39,7 +40,7 @@ export async function listMods(filters) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Failed to fetch items:', error);
+    console.error('Failed to fetch mods:', error);
     throw error;
   }
 }
@@ -54,7 +55,33 @@ export async function getMod(mod_name) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Failed to fetch items:', error);
+    console.error('Failed to fetch mod:', error);
     throw error;
   }
+}
+
+
+export async function deleteMod(mod_name) {
+    try {
+        const auth_token = Cookies.get('authToken');
+
+        const response = await fetch(`${API_BASE_URL}/mods/${mod_name}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': auth_token,
+            }
+        });
+
+        if (!response.ok) {
+            console.error(response.body); //TODO integrate body to error
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error('Failed to delete mod:', error);
+        throw error;
+    }
 }
