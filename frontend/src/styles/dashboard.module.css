@@ -47,7 +47,7 @@
 }
 
 .emptyTile {
-    height: 99%;
+    height: 100%;
     width: 22em;
     align-items: center;
     display: flex;
@@ -55,6 +55,8 @@
     background-color: #141414;
     border: #3a3a3a .1rem solid;
     border-radius: 1rem;
+
+    box-sizing: border-box;
 }
 
 .emptyTileText {

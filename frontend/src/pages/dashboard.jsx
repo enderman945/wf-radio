@@ -9,6 +9,7 @@ import { listMods } from '../services/mods';
 
 // Components
 import Button from '../components/Buttons/button'
+import SmallCard from '../components/Cards/small_card';
 
 // Images
 import Logo from '../assets/logo.png'
@@ -18,6 +19,7 @@ import Add from '../assets/add.svg'
 import styles from '../styles/dashboard.module.css'
 
 function DashboardPage() {
+    //TODO takes too long to load
 
     // useStates
 
@@ -117,11 +119,10 @@ function DashboardPage() {
                         Favorites
                     </p>
                     <div className={styles.tiles}>
-                        <div className={styles.emptyTile}>
-                            <p className={styles.emptyTileText}>
-                                You have no favorites for the moment
-                            </p>
-                        </div>
+                        <SmallCard 
+                            variant='empty'
+                            item={"You have no favorites for the moment"}
+                            />
                     </div>
                 </div>
                 <div className={styles.category}>
@@ -132,19 +133,20 @@ function DashboardPage() {
                         
                         {/* Temporary, missing card component */}
                         {creations.map( (item) => {
-                            console.debug(item.name);
-                            return (<div className={styles.emptyTile}>
-                                <div className={styles.emptyTileText}>
-                                    {item.display_name}
-                                </div>
-                            </div>);
+                            return (
+                            <SmallCard 
+                                variant='mod'
+                                href={'/mods/'+item.name}
+                                item={item}
+                                />
+                            );
                         })}
 
-                        <a className={styles.emptyTile} href='/create/mod'>
-                            <p className={styles.emptyTileText}>
-                                <img src={Add} ></img>
-                            </p>
-                        </a>
+                        <SmallCard 
+                            variant='empty'
+                            item={<img src={Add} ></img>}
+                            href='/create/mod'
+                        />
                     </div>
                 </div>
                 <div className={styles.toolbar}>

@@ -5,7 +5,8 @@ const { mdToHtml } = require("../utils/convert");
 const { sanitizeModData } = require("../utils/sanitize");
 
 
-// --- Get ---
+// --- Mods ---
+
 
 async function listMods(filters) {
     //TODO Validate filters
@@ -17,6 +18,7 @@ async function listMods(filters) {
     return await model.listMods({...filters});
 }
 
+
 async function getModByName(name) {
     const res = await model.getModByName(name);
     if (res.length == 0) {
@@ -24,6 +26,7 @@ async function getModByName(name) {
     }
     return res[0];
 }
+
 
 async function getFullModInfos(name) {
     const [base_infos, other_infos, tags] = await model.getFullModInfos(name);
@@ -37,17 +40,6 @@ async function getFullModInfos(name) {
     return res;
 }
 
-async function getModVersion(infos) {
-    const { mod, version_number, game_version, platform, environment} = infos;
-    const res = await model.getModVersion(mod, version_number, game_version, platform, environment);
-    if (res.length == 0) {
-        throw new AppError(404, "Cannot find mod with this name", "Not found");
-    }
-    return res[0];
-}
-
-
-// --- Create ---
 
 async function createMod(mod_data, author) {    
 
@@ -67,55 +59,15 @@ async function createMod(mod_data, author) {
     await model.createMod(name, display_name, author, description, mod_infos);
     
     // Return
-    return getModByName(name);
+    return await getModByName(name);
 }
 
-async function addVersion(version_data) {
-    
-    // Validate
-    //TODO
-    console.warn("Skipping validity checks for addVersion");
-
-    // Generate data
-    const { mod_name, version_number, channel, changelog, game_version,
-         platform, environment, url } = version_data; // Split
-    changelog = await mdToHtml(changelog); // Convert
-    await sanitizeModData(mod_data); // Sanitize
-    const release_date = (new Date()).toLocaleDateString();
-
-    // Write changes
-    await model.addVersion(mod_name, version_number, channel, changelog, 
-        release_date, game_version, platform, environment, url); // Database
-
-    // Return
-    return await model.getModVersion(mod_name, version_number, game_version, platform, environment );
-}
-
-async function addTags(mod, tags) {
-    
-    // Validate
-    //TODO
-    console.warn("Skipping validity checks for addTags");
-
-    // Write changes
-    await model.addTags(mod, tags);
-
-    // Return
-    const { tags:res } = await model.getFullModInfos(mod);
-    return { "mod": mod, "tags": res};
-
-}
-
-// --- Update ---
 
 async function updateMod(diff_data) {
     //TODO
     throw new AppError(501, "Not implemented");
 }
 
-
-
-// Delete
 
 async function deleteMod(name) {
 
@@ -138,21 +90,101 @@ async function deleteMod(name) {
     return mod;
 }
 
-async function deleteVersion(version_infos) {
+
+
+// --- Versions ---
+
+
+async function createModVersion(mod_name, version_data) {
+    
+    // Validate
+    //TODO
+    console.warn("Skipping validity checks for createModVersion");
+
+    // Generate data
+    const { version_number, channel, changelog, game_version,
+         platform, environment, url } = version_data; // Split
+
+    // changelog = await mdToHtml(changelog); // Convert
+    // await sanitizeModData(mod_data); // Sanitize
+    const release_date = Date.now();
+
+    // Write changes
+    await model.createModVersion(mod_name, {version_number, channel, changelog, 
+        release_date, game_version, platform, environment, url}); // Database
+    
+    // Return
+    return await model.getStrictModVersion(mod_name, version_number, game_version, platform, environment );
+}
+
+
+async function modifyModVersion(infos) {
+    throw new AppError(501, "Not implemented");
+}
+
+
+async function getModVersions(mod_name, filters) {
+
+    // Validation
+    //TODO
+    console.warn("Skipping getModVersions validation (Not implemented)");
+
+    filters.version_number  = filters.version_number    || null;
+    filters.channel         = filters.channel           || null;
+    filters.game_version    = filters.game_version      || null;
+    filters.platform        = filters.platform          || null;
+    filters.environment     = filters.environment       || null;
+
+    // Query
+    const res= await model.getModVersions(mod_name, {...filters});
+    return res;
+}
+
+// async function getModVersion(version_infos) {
+//     const { mod, version_number, game_version, platform, environment} = version_infos;
+//     const res = await model.getModVersion(mod, version_number, game_version, platform, environment);
+//     if (res.length == 0) {
+//         throw new AppError(404, "Cannot find mod with this name", "Not found");
+//     }
+//     return res[0];
+// }
+
+
+async function deleteModVersion(mod_name, version_infos) {
 
     // Validate
     // TODO
 
     // Generate data
-    const res = await getModVersion(version_infos);
-    const { mod, version_number, game_version, platform, environment} = version_infos;
+    const { version_number, game_version, platform, environment } = version_infos;
+    const res = await model.getStrictModVersion(mod_name, version_number, game_version, platform, environment );
 
     // Write changes to db
-    await model.deleteVersion(mod, version_number, game_version, platform, environment);
+    await model.deleteModVersion(mod_name, version_number, game_version, platform, environment);
     
     // Return
     return res;
 }
+
+
+// --- Tags ---
+
+
+async function addTags(mod, tags) {
+    
+    // Validate
+    //TODO
+    console.warn("Skipping validity checks for addTags");
+
+    // Write changes
+    await model.addTags(mod, tags);
+
+    // Return
+    const { tags:res } = await model.getFullModInfos(mod);
+    return { "mod": mod, "tags": res};
+
+}
+
 
 async function deleteTags(mod, tags) {
     
@@ -168,7 +200,10 @@ async function deleteTags(mod, tags) {
     return { "mod": mod, "tags": res};
 }
 
+
+
+
 module.exports = { listMods, getModByName, getFullModInfos, 
-                   createMod, addTags, addVersion,
-                   updateMod,
-                   deleteMod, deleteTags, deleteVersion };
+                   createMod,  updateMod, deleteMod,
+                   createModVersion, modifyModVersion, getModVersions, deleteModVersion,
+                   addTags, deleteTags };

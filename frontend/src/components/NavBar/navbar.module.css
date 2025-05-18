@@ -6,7 +6,7 @@
     
     margin: 1rem;
     height: 5rem;
-    min-width: 29rem; /* TODO update when changing navbar items (not automatic)*/
+    min-width: fit-content; 
     
     background-color: #1a1a1a;
     color: #eaeaea;

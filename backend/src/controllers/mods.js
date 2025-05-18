@@ -2,6 +2,9 @@ const handleError = require("../middleware/errors");
 const mod_service = require("../services/modService");
 const { authorizeModModification, authenticateToken } = require("../middleware/auth");
 
+
+// Mods
+
 async function listMods(req, res) {
     try {
         // Query
@@ -65,5 +68,63 @@ async function deleteMod(req, res) {
 }
 
 
+// Versions
 
-module.exports = { listMods, getModByName, createMod, modifyMod, deleteMod };
+async function createModVersion(req, res) {
+    try {
+        // Authorize
+        await authorizeModModification(req);
+        // Query
+        const name = req.params.name
+        const version_data = req.body;
+        const query_result = await mod_service.createModVersion(name, version_data);
+        res.json(query_result);
+    } catch (error) {
+        handleError(error, res);
+    }
+}
+
+async function modifyModVersion(req, res) {
+    try {
+        // Authorize
+        await authorizeModModification(req);
+        // Query
+        const name = req.params.name
+        const version_data = req.body;
+        const query_result = await mod_service.modifyModVersion(name, version_data);
+        res.json(query_result);
+    } catch (error) {
+        handleError(error, res);
+    }
+}
+
+async function getModVersions(req, res) {
+    try {
+        // Query
+        const name = req.params.name
+        const filters = req.query;
+        const query_result = await mod_service.getModVersions(name, filters);
+        res.json(query_result);
+    } catch (error) {
+        handleError(error, res);
+    }
+}
+
+async function deleteModVersion(req, res) {
+    try {
+        // Authorize
+        await authorizeModModification(req);
+        // Query
+        const name = req.params.name
+        const version_infos = req.body;
+        const query_result = await mod_service.deleteModVersion(name, version_infos);
+        res.json(query_result);
+    } catch (error) {
+        handleError(error, res);
+    }
+}
+
+
+
+module.exports = { listMods, getModByName, createMod, modifyMod, deleteMod,
+                   createModVersion, modifyModVersion, getModVersions, deleteModVersion };

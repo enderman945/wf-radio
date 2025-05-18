@@ -6,7 +6,6 @@ const db = getDatabase();
 // --- Get ---
 
 async function listMods(filters) { 
-    console.debug(filters);
     return await db.query(`SELECT name, display_name, author, description FROM Mods
                             WHERE
                             (CASE WHEN @search IS NOT NULL THEN 
@@ -34,29 +33,44 @@ async function getFullModInfos(name) {
     return [await base_infos, await other_infos, await tags];
 }
 
-async function listVersions(mod_name) { 
-    return await db.query("SELECT * FROM ModVersions WHERE mod = ?", [mod_name]);
-}
-
 async function listTags(mod_name) {
     return await db.query(`SELECT tag FROM ModTags WHERE mod = ?`, [mod_name]);
 }
 
-async function getVersionByNumber(mod_name, version_number) {
-    return await db.query(`SELECT * FROM ModVersions 
-                    WHERE  mod = ?
-                    AND    version_number = ?;`, 
-                    [mod_name, version_number]);
+//TODO rm
+async function listAllModVersions() {
+    return await db.query(`SELECT * FROM ModVersions`);
 }
 
-async function getVersion(mod_name, version_number, game_version, platform, environment) {
-    return await db.query(`SELECT * FROM ModVersions 
-                    WHERE  mod = ?
-                    AND    version_number = ?
-                    AND    game_version = ?
-                    AND    platform = ?
-                    AND    environment = ?;`, 
-                    [mod_name, version_number, game_version, platform, environment]);
+async function getModVersions(mod_name, filters) {
+    return await db.query(`SELECT * FROM ModVersions
+                            WHERE mod = @mod_name
+                            AND 
+                                (CASE WHEN @version_number IS NOT NULL THEN
+                                version_number = @version_number ELSE TRUE END) 
+                            AND
+                                (CASE WHEN @channel IS NOT NULL THEN
+                                channel = @channel ELSE TRUE END) 
+                            AND
+                                (CASE WHEN @game_version IS NOT NULL THEN
+                                game_version = @game_version ELSE TRUE END) 
+                            AND
+                                (CASE WHEN @platform IS NOT NULL THEN
+                                platform = @platform ELSE TRUE END) 
+                            AND
+                                (CASE WHEN @environment IS NOT NULL THEN
+                                environment = @environment ELSE TRUE END)
+                            ;`, {mod_name, ...filters});
+}
+
+async function getStrictModVersion(mod_name, version_number, game_version, platform, environment) {
+    return await db.query(`SELECT * FROM ModVersions
+                            WHERE mod            = ?
+                            AND   version_number = ?
+                            AND   game_version   = ?
+                            AND   platform       = ?
+                            AND   environment    = ?
+                            ;`, [mod_name, version_number, game_version, platform, environment]);
 }
 
 // --- Create ---
@@ -97,11 +111,15 @@ async function createMod(name, display_name, author, description, mod_infos) {
     return;
 }
 
-async function addVersion(mod, version_number, channel, changelog, release_date, game_version, platform, environment, url) {
+async function createModVersion(mod, version_infos) {
 
+    const { version_number, channel, changelog, release_date, game_version, platform, environment, url } = version_infos;
+    
     await db.run(`INSERT INTO ModVersions (mod, version_number, channel, changelog, release_date, game_version, environment, platform, url)
-                                       VALUES (?,   ?,              ?,       ?,         ?,            ?,            ?,           ?,        ?);`,
+                                               VALUES (?,   ?,              ?,       ?,         ?,            ?,            ?,           ?,        ?);`,
                                               [mod, version_number, channel, changelog, release_date, game_version, environment, platform, url]);
+
+    
     return;
 }
 
@@ -143,7 +161,7 @@ async function deleteMod(name) {
     return;
 }
 
-async function deleteVersion(name, version_number, game_version, platform, environment) {
+async function deleteModVersion(name, version_number, game_version, platform, environment) {
     await db.run(`DELETE FROM ModVersions WHERE mod = ? 
                                                 AND version_number = ?
                                                 AND game_version = ?
@@ -195,8 +213,8 @@ async function containsTag(name, tag) {
 // --- Exports ---
 
 module.exports = { listMods, getModByName, getFullModInfos,
-                   listVersions, listTags, getVersionByNumber, getVersion,
-                   createMod, addVersion, addTags,
+                   getModVersions, listTags, getStrictModVersion,
+                   createMod, createModVersion, addTags,
                    updateMod,
-                   deleteMod, deleteVersion, deleteTags,
-                   exists };
+                   deleteMod, deleteModVersion, deleteTags,
+                   exists, listAllModVersions };
