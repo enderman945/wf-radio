@@ -1,0 +1,138 @@
+.container {
+  position: absolute;
+  top: 11rem;
+  right: 4rem;
+  left: 22rem;
+  bottom: 4rem;
+  display: inline;
+  --gap: 1rem;
+}
+
+.form {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  width: calc(70% - var(--gap));
+  min-height: 20rem;
+
+  padding: 3rem;
+
+  background-color: #1a1a1a;
+  color: #eaeaea;
+
+  border: #3a3a3a solid;
+  border-width: .1em;
+  border-radius: .5rem;
+
+  overflow: scroll;
+}
+
+.infosPanel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(70% + var(--gap) + 7rem);
+  right: 0;
+
+  padding: 2rem;
+  min-height: 20rem;
+  align-items: center;
+
+  background-color: #1a1a1a;
+  color: #eaeaea;
+
+  border: #3a3a3a solid;
+  border-width: .1em;
+  border-radius: .5rem;
+  display: inline;
+
+  overflow: scroll;
+}
+
+.profilePicture {
+/*TODO keep it center when overlapping*/
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 7em;
+}
+
+.author {
+    margin: 0;
+    margin-bottom: 1rem;
+
+    color: #c5c5c5;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.panelTitle {
+    margin-top: 2rem;
+
+    color: #eaeaea;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+
+.smallField {
+    width: 20em;
+}
+
+/* .ChangelogField {
+
+    margin-top: -.01rem;
+    margin-left: 1rem;
+
+    height: 7em;
+    min-width: 20em;
+    display: inline-flex;
+    flex-grow: 1;
+} */
+
+.changelogField {
+    min-width: 20em;
+    height: 100%;
+}
+
+.topFields {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.middleFields {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+}
+
+.bottomFields {
+    /* display: flex;
+    justify-content: right; */
+    height: 25vh;
+    min-height: 12em;
+}
+
+.bottomBottomFields {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+
+    margin: 2rem 0;
+}
+
+
+.createButton {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+
+    font-size: 1.4rem;
+}

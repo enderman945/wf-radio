@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import { jwtDecode } from 'jwt-decode'
 
 // Functions
-import { getMod, deleteMod } from '../services/mods';
+import { getMod, deleteMod, getModVersions } from '../services/mods';
 
 // Components
 import Button from '../components/Buttons/button';
@@ -26,6 +26,7 @@ function ModPage({name}) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [owner, setOwner] = useState(false);
+    const [versions, setVersions] = useState(null);
 
     // UseEffect
     useEffect(() => {
@@ -34,8 +35,11 @@ function ModPage({name}) {
             setLoading(true);
             setError(false);
             try {
-                const fetched_mod = await getMod(name);
-                setMod(fetched_mod);
+                const fetched_mod = getMod(name);
+                const fetched_versions = getModVersions(name, {});
+                setMod( await fetched_mod);
+                setVersions( await fetched_versions);
+
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -53,18 +57,19 @@ function ModPage({name}) {
         location.replace('/dashboard');
     };
 
-        // Load user informations
-        //TODO use a service
-        //? for some reason, doesn't work inside useEffect
-        const token = Cookies.get('authToken');
-        if (token) {
-            const decoded_token = jwtDecode(token);
-            if (decoded_token) {
-                if (decoded_token.username === mod.author) {
-                    setOwner(true);
-                }
+
+    // Load user informations
+    //TODO use a service
+    //? for some reason, doesn't work inside useEffect
+    const token = Cookies.get('authToken');
+    if (token) {
+        const decoded_token = jwtDecode(token);
+        if (decoded_token) {
+            if (decoded_token.username === mod.author) {
+                setOwner(true);
             }
         }
+    }
 
         const base_page = (
             <>
@@ -139,35 +144,35 @@ function ModPage({name}) {
 
                     <p className={styles.panelTitle}>Versions</p>
                     <div className={styles.timeline}>
-                        <a href={"/notfound"}>
-                            <svg className={styles.versionDot}>
-                                <circle cx="11" cy="11" r="10" stroke="#3a3a3a" stroke-width="1" fill="#1a1a1a" />
-                            </svg>
-                            <div className={styles.version}>
-                                v3.0 (latest)
-                            </div> 
-                        </a>
-                        <a href={"/notfound"}>
-                            <svg className={styles.versionDot}>
-                                <circle cx="11" cy="11" r="10" stroke="#3a3a3a" stroke-width="1" fill="#1a1a1a" />
-                            </svg>
-                            <div className={styles.version}>
-                                v2.0
-                            </div>
-                        </a>
-
-                        <a href={"/notfound"}>
-                            <svg className={styles.versionDot}>
-                                <circle cx="11" cy="11" r="10" stroke="#3a3a3a" stroke-width="1" fill="#1a1a1a" />
-                            </svg>
-                            <div className={styles.version}>
-                                v1.0
-                            </div>
-                        </a>
+                        
+                        {versions.map( (version) => {
+                            const url = `/mods/${name}/versions`;
+                            return (
+                            <a href={url}>
+                                <svg className={styles.versionDot}>
+                                    <circle 
+                                        cx="11"  cy="11" r="10" 
+                                        stroke="#3a3a3a"  stroke-width="1" 
+                                        fill="#1a1a1a" 
+                                        href={url}
+                                    />
+                                </svg>
+                                <div className={styles.version} href={url}>
+                                    {`${version.channel} ${version.version_number}`}
+                                </div>
+                            </a>)
+                        })}
                     </div>
 
                     { owner ? (
                         <div className={styles.panelActions}>
+                            <Button
+                                // variant='secondary'
+                                className={styles.deleteButton}
+                                href={`/mods/${name}/versions/create`}
+                                >
+                                    Add version
+                            </Button>
                             <Button
                                 variant='delete'
                                 className={styles.deleteButton}

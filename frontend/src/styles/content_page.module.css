@@ -132,6 +132,18 @@
     background-color: #2a2a2a;
     border: #3a3a3a .1rem solid;
     border-radius: .5rem;
+
+    user-select: none;
+}
+
+.countButton {
+
+    /* padding: .5em; */
+    margin: 0 .5rem;
+    min-width: 3em;
+
+    height: 100%;
+    font-size: 1rem;
 }
 
 .countIcon {
@@ -171,6 +183,8 @@
     font-size: 1.3em;
     border-radius: .5em;
 
+    cursor: pointer;
+
     transition: 200ms;
 }
 
@@ -183,6 +197,8 @@
     width: 1.5em;
 
     z-index: 2;
+
+    cursor: pointer;
 }
 
 .versionDot > circle {
@@ -206,6 +222,10 @@
 
     width: 100%;
 
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
     box-sizing: border-box;
 }
 
@@ -215,4 +235,23 @@
     width: 100%;
     min-width: 5em;
     font-size: 1.2rem;
+}
+
+.bigPanelTitle {
+
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.fullChangelog {
+
+    margin-top: 3rem;
+    color: #8a8a8a
+}
+
+.compatContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3érem;
 }

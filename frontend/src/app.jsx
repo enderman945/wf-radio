@@ -12,7 +12,9 @@ import ComingSoonPage from './pages/coming_soon';
 
 import ModsPage from './pages/mods';
 import ModPage from './pages/mod_page'
+import ModVersionsPage from './pages/mod_versions'
 import ModCreationPage from './pages/mod_creation'
+import ModVersionCreationPage from './pages/create_mod_version'
 
 import ModpacksPage from './pages/modpacks';
 
@@ -50,6 +52,8 @@ export function App() {
 
         <ModPage path="/mods/:name"></ModPage>
         <ModCreationPage path="/create/mod" ></ModCreationPage>
+        <ModVersionsPage path="/mods/:name/versions"></ModVersionsPage>
+        <ModVersionCreationPage path="/mods/:name/versions/create"></ModVersionCreationPage>
 
         <LoginPage path='/login'></LoginPage>
         <RegisterPage path='/register'></RegisterPage>
