@@ -1,10 +1,35 @@
 .halo {
-    position: fixed;
+    /* position: fixed; */
+    position: relative;
     z-index: -1;
 
     height: 100vh;
     width: 100vw;
-    background: radial-gradient(circle at 50% 200%,#353be5 0%, #353be5 45%, #00000000 80%);
+}
+
+.halo::before,
+.halo::after {
+    content: '';
+    position: absolute;
+    top: bottom;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+     background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.halo::before {
+    background: radial-gradient(circle at 60% 200%,#353be5 0%, #353be5 45%, #00000000 85%);
+    opacity: 1;
+    animation: haloBlue 10s infinite alternate;
+}
+
+.halo::after {
+    background: radial-gradient(circle at 0% 210%,#353be5 10%, #4935e5 45%, #00000000 80%);
+    opacity: 0;
+    animation: haloPurple 7s infinite alternate;
 }
 
 .background {
@@ -86,4 +111,37 @@
     font-size: 1.5em;
     text-align: center;
 
+}
+
+
+/* Animations ---------------- */ 
+
+@keyframes haloBlue {
+    0% {
+    opacity: 0;
+    /* background-size: 50% 50%; */
+  }
+  50% {
+    opacity: 1;
+    /* background-size: 150% 150%; */
+  }
+  100% {
+    opacity: 0;
+    /* background-size: 50% 50%;  */
+  }
+}
+
+@keyframes haloPurple {
+    0% {
+        opacity: 1;
+        /* background-size: 100% 50%; */
+    }
+    50% {
+        opacity: 0;
+        /* background-size: 100% 100%;  */
+    }
+    100% {
+        opacity: 1;
+        /* background-size: 100% 50%;  */
+    }
 }

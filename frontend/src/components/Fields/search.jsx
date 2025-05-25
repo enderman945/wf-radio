@@ -9,10 +9,11 @@ import SearchIcon from '../../assets/search.svg'
 import styles from './search.module.css'; // Optional: CSS Modules
 
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch, timeout }) {
 
     const [search_input, setSearchInput] = useState('');
-      const timeout_id = useRef(null);
+    const timeout_id = useRef(null);
+    timeout = timeout | 0;
 
     const handleInputChange = (event) => {
 
@@ -25,7 +26,7 @@ function SearchBar({ onSearch }) {
 
         timeout_id.current = setTimeout(() => {
             onSearch(new_search_input);
-        }, 500);
+        }, timeout);
     };
 
     useEffect(() => {

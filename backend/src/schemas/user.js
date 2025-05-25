@@ -1,5 +1,6 @@
 const Ajv = require("ajv");
-const ajv = new Ajv();
+const addFormats = require("ajv-formats")
+const ajv = new Ajv({formats: {email: true}});
 
 // --- Schemas ---
 //TODO
@@ -7,14 +8,17 @@ const ajv = new Ajv();
 const newUserSchema = {
     type: 'object',
     properties: {
-        email: { type: 'string', format: 'email' },
-        name: { type: 'string' },
-        password: { type: 'string', minLength: 3, maxLength: 30 },
+        username: { type: 'string' }, //TODO
+        display_name: { type: 'string'},
+        email: { type: 'string', format: 'email' }, //TODO
+        password: { type: 'string', minLength: 6, maxLength: 255 },
+        profile_picture: {type: 'string'} //TODO
     },
     required: ['name', 'email', 'password'],
     additionalProperties: false
 };
 
+addFormats(ajv, ['email']);
 const validateNewUserData = ajv.compile(newUserSchema);
 
 

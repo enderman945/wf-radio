@@ -10,7 +10,7 @@ async function getAllUsers() {
 }
 
 async function getUserByName(name) {
-    return await db.query("SELECT username, display_name, profile_picture, role FROM Users WHERE username = ?;", [name]);
+    return await db.query("SELECT username, display_name, email, profile_picture, role FROM Users WHERE username = ?;", [name]);
 }
 
 async function getUserByEmail(email) {
@@ -25,8 +25,13 @@ async function getUserPassword(name) {
     return await db.query("SELECT username, password FROM Users WHERE username = ?;", [name]);
 }
 
+//TODO test
 async function exists(name) {
     return await db.exists("Users", "username", name);
+}
+
+async function existsEmail(email) {
+        return await db.exists("Users", "email", email);
 }
 
 
@@ -122,4 +127,4 @@ module.exports = { getAllUsers, getUserByName, getUserByEmail, getFullUserInfos,
                    createUser, addFavoriteMods,
                    updateUser,
                    deleteUser, deleteFavoriteMods,
-                   exists }
+                   exists, existsEmail }
