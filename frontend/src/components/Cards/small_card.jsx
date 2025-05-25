@@ -22,6 +22,8 @@ function SmallCard({item, variant, href}) {
         const item_page = "/mods/" + item.name;
         return (
             <a className={styles.Card} href={href}>  
+                <img src={Banner} className={styles.banner}></img>
+                <img src={Thumbnail} className={styles.thumbnail}></img>
                 <div className={styles.CardText}>
                     {item.display_name}
                 </div>

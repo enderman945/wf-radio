@@ -92,7 +92,7 @@ function DashboardPage() {
         return (
             <>
                 {base_page}
-                <div class='container'>
+                <div class={styles.container}>
                     <p>Loading</p>
                 </div>
             </>
@@ -103,7 +103,7 @@ function DashboardPage() {
             return (
             <>
                 {base_page}
-                <div class='container'>
+                <div class={styles.container}>
                     <p>Error: {creations_error}</p>   
                 </div>
             </>
@@ -113,7 +113,7 @@ function DashboardPage() {
     return (
         <>
             {base_page}
-            <div class='container'>
+            <div className={styles.container}>
                 <div className={styles.category}>
                     <p className={styles.title}>
                         Favorites
@@ -149,6 +149,8 @@ function DashboardPage() {
                         />
                     </div>
                 </div>
+                <div style="height: 2rem"/>
+            </div>
                 <div className={styles.toolbar}>
                     <div className={styles.toolbarRightItems}>
                         <Button 
@@ -159,7 +161,6 @@ function DashboardPage() {
                             </Button>
                     </div>
                 </div>
-            </div>
         </>
     );
 }

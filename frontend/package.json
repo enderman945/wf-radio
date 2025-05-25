@@ -1,7 +1,7 @@
 {
   "name": "wf-radio-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "Alpha 1",
   "type": "module",
   "scripts": {
     "dev": "vite",

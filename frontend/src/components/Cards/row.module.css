@@ -1,6 +1,6 @@
 .rowCard {
 
-    height: 7rem;
+    min-height: 7rem;
     margin-bottom: 1rem;
 
     background-color: #1a1a1a;

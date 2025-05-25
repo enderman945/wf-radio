@@ -1,6 +1,6 @@
 {
   "name": "wf-radio-backend",
-  "version": "1.0.0",
+  "version": "Alpha 1",
   "description": "",
   "main": "server.js",
   "scripts": {

@@ -9,6 +9,7 @@ import { deleteUser } from '../services/users';
 
 // Components
 import Button from '../components/Buttons/button';
+import Checkbox from '../components/Buttons/checkbox';
 
 // Styles
 import styles from '../styles/settings.module.css'
@@ -97,16 +98,12 @@ function SettingsPage() {
                                     <option value="dark">Dark</option>
                                 </select>
                             </p>
-                            <p>
-                                <label>
-                                Enable Notifications:
-                                <input
-                                    type="checkbox"
+                                <Checkbox
+                                    id='notifications'
+                                    label='Enable Notifications'
                                     checked={notificationsEnabled}
                                     onChange={handleNotificationsChange}
                                 />
-                                </label>
-                            </p>
                         </>
                     ) :
                     tab === 'user' ? (

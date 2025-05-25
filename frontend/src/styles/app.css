@@ -129,6 +129,12 @@ h1 {
   /* border: #3a3a3a solid; */
   border-width: .1em;
   border-radius: .5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  
+  overflow: scroll;
 }
 
 .container {

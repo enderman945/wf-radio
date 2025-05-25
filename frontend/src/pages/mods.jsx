@@ -9,12 +9,16 @@ import { listMods } from '../services/mods';
 import FiltersPanel from '../components/Filters/panel'
 import SearchBar from '../components/Fields/search';
 
+// Assets
+import '../styles/filters_bar.css'
+
 // Images
 import logo from '../assets/logo.png'
 
-// Styles
+// Components
 import GridCard from '../components/Cards/grid';
 import RowCard from '../components/Cards/row';
+import Checkbox from '../components/Buttons/checkbox';
 
 
 function ModsPage() {
@@ -67,7 +71,19 @@ function ModsPage() {
             </a>
             <FiltersPanel>                    
                 <SearchBar onSearch={handleSearch} />
-                
+                <div class='filterTitle'>
+                    Platform
+                </div>
+                <div class='filterOptions'>
+                <Checkbox 
+                    id='client'
+                    label='Client'
+                    />
+                                    <Checkbox 
+                    id='server'
+                    label='Server'
+                    />
+                    </div>
             </FiltersPanel>
         </>
     );
